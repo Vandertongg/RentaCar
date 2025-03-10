@@ -2,9 +2,9 @@
 {
     public class RentNewsViewModel
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
+        public int Pk { get; set; }
+        public string Title { get; set; } = null!;
+        public string Content { get; set; } = null!;
         public string? NewsPicture { get; set; }
         public DateTime DatePosted { get; set; } = DateTime.Now;
     }

@@ -1,13 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ServiceStack.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentaCar.RealEstateManager.Database.Models
 {
+    [Table("RentNews", Schema = "blg")]
     public class RentNews
     {
-        [Key]
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
+        [PrimaryKey]
+        public int Pk { get; set; }
+        [Required]
+        public string Title { get; set; } = null!;
+        [Required]
+        public string Content { get; set; } = null!;
         public string? NewsPicture { get; set; }
         public DateTime DatePosted { get; set; } = DateTime.Now;
     }

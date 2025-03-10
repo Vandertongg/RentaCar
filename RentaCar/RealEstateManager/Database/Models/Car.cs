@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using ServiceStack.DataAnnotations;
+﻿using ServiceStack.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentaCar.RealEstateManager.Database.Models
@@ -16,6 +15,6 @@ namespace RentaCar.RealEstateManager.Database.Models
         public int PassangerSeats { get; set; } 
         public string? Description { get; set; }
         public  string? Picture { get; set; }
-        public ICollection<BookingViewModel> Bookings { get; set; } = new List<BookingViewModel>();
+        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
     }
 }
