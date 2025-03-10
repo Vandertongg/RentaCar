@@ -1,9 +1,18 @@
-﻿namespace RentaCar.RealEstateManager.WebApp.Models
+﻿using ServiceStack.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
+
+namespace RentaCar.RealEstateManager.WebApp.Models
 {
     public class UserViewModel
     {
-        public string FullName { get; set; }
-        public string? ProfilePicture { get; set; }
-        public ICollection<BookingViewModel> Bookings { get; set; } = new List<BookingViewModel>();
+        
+        public int Pk { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+
+        public  string? UserName { get; set; }
+        public  string? Email { get; set; }
+        public uint Age { get; set; }
+        public IFormFile? ProfilePicture { get; set; }
     }
 }
