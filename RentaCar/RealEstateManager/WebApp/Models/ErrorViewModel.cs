@@ -1,4 +1,4 @@
-namespace RentaCar.RealEstateManager.Database.Models
+namespace RentaCar.RealEstateManager.WebApp.Models
 {
     public class ErrorViewModel
     {

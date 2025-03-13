@@ -1,21 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace RentaCar.RealEstateManager.Database.Models
+namespace RentaCar.RealEstateManager.Database.Data.Entities
 {
     [Table("Booking", Schema = "blg")]
     public class Booking
     {
         [Key]
-        public int Id { get; set; }
-        public int UserId { get; set; }
+        public int Pk { get; set; }
+
+        [ForeignKey(nameof(User))]
+        public string? UserId { get; set; }
         public User User { get; set; } = null!;
+
+        [ForeignKey(nameof(Car))]
         public int CarId { get; set; }
         public Car Car { get; set; } = null!;
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public BookingStatus Status { get; set; } = BookingStatus.Pending; 
+        public BookingStatus Status { get; set; } = BookingStatus.Pending;
     }
 
     public enum BookingStatus

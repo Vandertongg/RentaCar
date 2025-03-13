@@ -82,17 +82,18 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.3" />
     <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="ServiceStack.Interfaces" Version="8.6.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\" />
     <Folder Include="RealEstateManager\API\Controllers\" />
     <Folder Include="RealEstateManager\API\DTOs\" />
     <Folder Include="RealEstateManager\API\Services\" />
     <Folder Include="RealEstateManager\Database\Migrations\" />
     <Folder Include="RealEstateManager\Docs\" />
-    <Folder Include="RealEstateManager\WebApp\Models\" />
     <Folder Include="RealEstateManager\WebApp\Services\" />
   </ItemGroup>
 
