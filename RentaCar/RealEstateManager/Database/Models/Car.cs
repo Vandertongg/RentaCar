@@ -15,6 +15,7 @@ namespace RentaCar.RealEstateManager.Database.Models
         public int PassangerSeats { get; set; } 
         public string? Description { get; set; }
         public  string? Picture { get; set; }
+        public bool IsAvailable { get; set; } = true;
         public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
     }
 }

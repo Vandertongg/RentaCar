@@ -13,5 +13,6 @@ namespace RentaCar.RealEstateManager.WebApp.Models
         public int PassangerSeats { get; set; }
         public string? Description { get; set; }
         public string? Picture { get; set; }
+        public bool IsAvailable { get; set; } = true;
     }
 }
