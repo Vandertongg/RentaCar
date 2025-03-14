@@ -8,7 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace PetOasis.Controllers
+namespace RentaCar.Controllers
 {
     [Authorize(Roles = "Admin")] // Only allow Admins to manage users
     public class AdminController : Controller

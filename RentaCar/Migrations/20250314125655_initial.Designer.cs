@@ -7,20 +7,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentaCar.RealEstateManager.Database.Data;
 
+
+
+
 #nullable disable
 
 namespace RentaCar.Migrations
 {
     [DbContext(typeof(RentaCarDbContext))]
-    [Migration("20250313054926_Initial")]
-    partial class Initial
+    [Migration("20250314125655_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "9.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

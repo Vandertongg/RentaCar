@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace RentaCar.RealEstateManager.Database.Data.Entities
 {
     [Table("User", Schema = "blg")]
-    public class User:IdentityUser
+    public class User : IdentityUser
     {
         [Key]
         public int Pk { get; set; }
