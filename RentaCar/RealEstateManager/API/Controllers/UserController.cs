@@ -8,7 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace RentaCar.Controllers
+namespace RentaCar.RealEstateManager.API.Controllers
 {
     [Authorize(Roles = "Admin")] // Only allow Admins to manage users
     public class AdminController : Controller

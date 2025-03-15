@@ -8,25 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using RentaCar.RealEstateManager.Database.Data;
 using RentaCar.RealEstateManager.Database.Data.Entities;
 
-namespace RentaCar.Controllers
+namespace RentaCar.RealEstateManager.API.Controllers
 {
-    public class BookingsController : Controller
+    public class RentNewsController : Controller
     {
         private readonly RentaCarDbContext _context;
 
-        public BookingsController(RentaCarDbContext context)
+        public RentNewsController(RentaCarDbContext context)
         {
             _context = context;
         }
 
-        // GET: Bookings
+        // GET: RentNews
         public async Task<IActionResult> Index()
         {
-            var rentaCarDbContext = _context.Bookings.Include(b => b.Car).Include(b => b.User);
-            return View(await rentaCarDbContext.ToListAsync());
+            return View(await _context.RentNews.ToListAsync());
         }
 
-        // GET: Bookings/Details/5
+        // GET: RentNews/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,45 +33,39 @@ namespace RentaCar.Controllers
                 return NotFound();
             }
 
-            var booking = await _context.Bookings
-                .Include(b => b.Car)
-                .Include(b => b.User)
+            var rentNews = await _context.RentNews
                 .FirstOrDefaultAsync(m => m.Pk == id);
-            if (booking == null)
+            if (rentNews == null)
             {
                 return NotFound();
             }
 
-            return View(booking);
+            return View(rentNews);
         }
 
-        // GET: Bookings/Create
+        // GET: RentNews/Create
         public IActionResult Create()
         {
-            ViewData["CarId"] = new SelectList(_context.Cars, "Pk", "Pk");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // POST: Bookings/Create
+        // POST: RentNews/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Pk,UserId,CarId,StartDate,EndDate,Status")] Booking booking)
+        public async Task<IActionResult> Create([Bind("Pk,NewsPicture,Title,Content,DatePosted")] RentNews rentNews)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(booking);
+                _context.Add(rentNews);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CarId"] = new SelectList(_context.Cars, "Pk", "Pk", booking.CarId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", booking.UserId);
-            return View(booking);
+            return View(rentNews);
         }
 
-        // GET: Bookings/Edit/5
+        // GET: RentNews/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,24 +73,22 @@ namespace RentaCar.Controllers
                 return NotFound();
             }
 
-            var booking = await _context.Bookings.FindAsync(id);
-            if (booking == null)
+            var rentNews = await _context.RentNews.FindAsync(id);
+            if (rentNews == null)
             {
                 return NotFound();
             }
-            ViewData["CarId"] = new SelectList(_context.Cars, "Pk", "Pk", booking.CarId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", booking.UserId);
-            return View(booking);
+            return View(rentNews);
         }
 
-        // POST: Bookings/Edit/5
+        // POST: RentNews/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Pk,UserId,CarId,StartDate,EndDate,Status")] Booking booking)
+        public async Task<IActionResult> Edit(int id, [Bind("Pk,NewsPicture,Title,Content,DatePosted")] RentNews rentNews)
         {
-            if (id != booking.Pk)
+            if (id != rentNews.Pk)
             {
                 return NotFound();
             }
@@ -106,12 +97,12 @@ namespace RentaCar.Controllers
             {
                 try
                 {
-                    _context.Update(booking);
+                    _context.Update(rentNews);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BookingExists(booking.Pk))
+                    if (!RentNewsExists(rentNews.Pk))
                     {
                         return NotFound();
                     }
@@ -122,12 +113,10 @@ namespace RentaCar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CarId"] = new SelectList(_context.Cars, "Pk", "Pk", booking.CarId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", booking.UserId);
-            return View(booking);
+            return View(rentNews);
         }
 
-        // GET: Bookings/Delete/5
+        // GET: RentNews/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,36 +124,34 @@ namespace RentaCar.Controllers
                 return NotFound();
             }
 
-            var booking = await _context.Bookings
-                .Include(b => b.Car)
-                .Include(b => b.User)
+            var rentNews = await _context.RentNews
                 .FirstOrDefaultAsync(m => m.Pk == id);
-            if (booking == null)
+            if (rentNews == null)
             {
                 return NotFound();
             }
 
-            return View(booking);
+            return View(rentNews);
         }
 
-        // POST: Bookings/Delete/5
+        // POST: RentNews/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var booking = await _context.Bookings.FindAsync(id);
-            if (booking != null)
+            var rentNews = await _context.RentNews.FindAsync(id);
+            if (rentNews != null)
             {
-                _context.Bookings.Remove(booking);
+                _context.RentNews.Remove(rentNews);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BookingExists(int id)
+        private bool RentNewsExists(int id)
         {
-            return _context.Bookings.Any(e => e.Pk == id);
+            return _context.RentNews.Any(e => e.Pk == id);
         }
     }
 }

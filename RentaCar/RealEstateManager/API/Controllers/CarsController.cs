@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RentaCar.RealEstateManager.Database.Data;
 using RentaCar.RealEstateManager.Database.Data.Entities;
 
-namespace RentaCar.Controllers
+namespace RentaCar.RealEstateManager.API.Controllers
 {
     public class CarsController : Controller
     {
