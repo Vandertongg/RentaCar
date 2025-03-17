@@ -133,23 +133,49 @@ namespace RentaCar.RealEstateManager.API.Controllers
 
             return View(model);
         }
-        /*public async Task<IActionResult> Create(UserViewModel model)
+        
+        // GET: User/Create
+        public IActionResult Create()
         {
+            return View(new User()); // Връщаме празен User обект
+        }
 
-            if (ModelState.IsValid)
+        // POST: User/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(User user, string password)
+        {
+            if (!ModelState.IsValid)
             {
-                var user = new User
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    
-                };
+                return View(user);
+            }
 
-                _context.User.Add(user);
-                await _context.SaveChangesAsync();
+            // Директно използваме получения User обект
+            // Настройваме UserName да е същото като Email, ако е необходимо
+            if (string.IsNullOrEmpty(user.UserName))
+            {
+                user.UserName = user.Email;
+            }
+
+            var result = await _userManager.CreateAsync(user, password);
+
+            if (result.Succeeded)
+            {
+                // Опционално: добави потребителя към роля
+                await _userManager.AddToRoleAsync(user, "User");
+
                 return RedirectToAction(nameof(Index));
             }
-        }*/
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return View(user);
+        }
+
+
 
     }
 }
