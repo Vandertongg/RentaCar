@@ -10,18 +10,18 @@ namespace RentaCar.RealEstateManager.Database.Data.Entities
         [Key]
         public int Pk { get; set; }
 
-        [Required]
+       
         public string IdentificationNumber { get; set; } = null!;
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
 
-        [Required]
+       
         public override string UserName { get; set; } = null!;
 
-        [Required]
+       
         public override string? Email { get; set; } = null!;
 
-        [Required]
+        
         [Range(18, int.MinValue, ErrorMessage = "You must be at least 18 years old to be permitted to book!")]
         public uint Age { get; set; }
         public string? ProfilePicture { get; set; }

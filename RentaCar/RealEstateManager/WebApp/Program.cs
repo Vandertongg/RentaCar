@@ -31,7 +31,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-   
+    await SeedRolesAndAdmin(services);
 }
 
 // Configure the HTTP request pipeline.
@@ -55,5 +55,41 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 app.Run();
+async Task SeedRolesAndAdmin(IServiceProvider serviceProvider)
+{
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+
+    string[] roleNames = { "Admin", "User" };
+    foreach (var roleName in roleNames)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+
+    }
+    //Create admin
+    string adminEmail = "admin@rentacar.com";
+    string adminPassword = "Admin123!";
+
+    var adminUser = await userManager.FindByNameAsync(adminEmail);
+    if (adminUser == null)
+    {
+        var newAdmin = new User
+        {
+            UserName = adminEmail,
+            Email = adminEmail,
+            EmailConfirmed = true,
+            FirstName = "RentaCar Admin",
+            IdentificationNumber = "1234567890"
+        };
+        var createAdmin = await userManager.CreateAsync(newAdmin, adminPassword);
+        if (createAdmin.Succeeded)
+        {
+            await userManager.AddToRoleAsync(newAdmin, "Admin");
+        }
+    }
+}
 
 

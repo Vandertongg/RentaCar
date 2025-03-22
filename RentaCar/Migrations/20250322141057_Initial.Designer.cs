@@ -12,7 +12,7 @@ using RentaCar.RealEstateManager.Database.Data;
 namespace RentaCar.Migrations
 {
     [DbContext(typeof(RentaCarDbContext))]
-    [Migration("20250315105138_Initial")]
+    [Migration("20250322141057_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace RentaCar.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -273,7 +273,6 @@ namespace RentaCar.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -333,7 +332,8 @@ namespace RentaCar.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
 
                     b.HasIndex("IdentificationNumber")
                         .IsUnique();

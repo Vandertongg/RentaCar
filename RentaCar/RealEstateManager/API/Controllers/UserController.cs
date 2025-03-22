@@ -3,14 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentaCar.RealEstateManager.Database.Data.Entities;
-using RentaCar.RealEstateManager.WebApp.Models;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace RentaCar.RealEstateManager.API.Controllers
 {
-    [Authorize(Roles = "Admin")] // Only allow Admins to manage users
+    [Authorize(Roles = "Admin")] // Само администраторите имат достъп
     public class AdminController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -26,6 +23,7 @@ namespace RentaCar.RealEstateManager.API.Controllers
             var users = await _userManager.Users.ToListAsync();
             return View(users);
         }
+
 
         // GET: User/Details/5
         public async Task<IActionResult> Details(string id)
@@ -88,56 +86,50 @@ namespace RentaCar.RealEstateManager.API.Controllers
                 return NotFound();
             }
 
-            var model = new UserViewModel
-            {
-                Pk = user.Pk,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-
-            };
-
-            return View(model);
+            return View(user); // Връщаме директно обекта User към изгледа
         }
+
         // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(UserViewModel model)
+        public async Task<IActionResult> Edit(User user)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(user);
             }
 
-            var user = await _userManager.FindByIdAsync(model.Pk.ToString());
-            if (user == null)
+            var existingUser = await _userManager.FindByIdAsync(user.Id);
+            if (existingUser == null)
             {
                 return NotFound();
             }
 
             // Актуализирайте полетата на потребителя
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-            // Добавете други полета, ако е необходимо
+            existingUser.FirstName = user.FirstName;
+            existingUser.LastName = user.LastName;
+            existingUser.IdentificationNumber = user.IdentificationNumber;
+            existingUser.Email = user.Email;
 
-            var result = await _userManager.UpdateAsync(user);
+            var result = await _userManager.UpdateAsync(existingUser);
+
             if (result.Succeeded)
             {
                 return RedirectToAction(nameof(Index));
             }
 
-            // Ако има грешки при актуализацията, добавете ги към ModelState
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
 
-            return View(model);
+            return View(user);
         }
-        
+
         // GET: User/Create
         public IActionResult Create()
         {
-            return View(new User()); // Връщаме празен User обект
+            return View(new User());
         }
 
         // POST: User/Create
@@ -150,20 +142,16 @@ namespace RentaCar.RealEstateManager.API.Controllers
                 return View(user);
             }
 
-            // Директно използваме получения User обект
-            // Настройваме UserName да е същото като Email, ако е необходимо
             if (string.IsNullOrEmpty(user.UserName))
             {
-                user.UserName = user.Email;
+                user.UserName = user.Email; // Задаваме потребителското име като имейл, ако не е зададено
             }
 
             var result = await _userManager.CreateAsync(user, password);
 
             if (result.Succeeded)
             {
-                // Опционално: добави потребителя към роля
-                await _userManager.AddToRoleAsync(user, "User");
-
+                await _userManager.AddToRoleAsync(user, "User"); // Добавяме потребителя към роля "User"
                 return RedirectToAction(nameof(Index));
             }
 
@@ -174,8 +162,5 @@ namespace RentaCar.RealEstateManager.API.Controllers
 
             return View(user);
         }
-
-
-
     }
 }
