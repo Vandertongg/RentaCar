@@ -7,10 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Compile Remove="RealEstateManager\Database\Migrations\**" />
+    <Content Remove="RealEstateManager\Database\Migrations\**" />
+    <EmbeddedResource Remove="RealEstateManager\Database\Migrations\**" />
+    <None Remove="RealEstateManager\Database\Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="RealEstateManager\API\DTOs\" />
     <Folder Include="RealEstateManager\API\Services\" />
-    <Folder Include="RealEstateManager\Database\Migrations\" />
     <Folder Include="RealEstateManager\Docs\" />
     <Folder Include="RealEstateManager\WebApp\Services\" />
   </ItemGroup>

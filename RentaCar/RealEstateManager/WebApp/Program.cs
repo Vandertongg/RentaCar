@@ -67,7 +67,6 @@ async Task SeedRolesAndAdmin(IServiceProvider serviceProvider)
         {
             await roleManager.CreateAsync(new IdentityRole(roleName));
         }
-
     }
     //Create admin
     string adminEmail = "admin@rentacar.com";
@@ -81,7 +80,8 @@ async Task SeedRolesAndAdmin(IServiceProvider serviceProvider)
             UserName = adminEmail,
             Email = adminEmail,
             EmailConfirmed = true,
-            FirstName = "RentaCar Admin",
+            FirstName = "RentaCar",
+            LastName = "Admin",
             IdentificationNumber = "1234567890"
         };
         var createAdmin = await userManager.CreateAsync(newAdmin, adminPassword);

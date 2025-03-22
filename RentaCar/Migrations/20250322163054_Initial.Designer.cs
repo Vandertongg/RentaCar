@@ -12,7 +12,7 @@ using RentaCar.RealEstateManager.Database.Data;
 namespace RentaCar.Migrations
 {
     [DbContext(typeof(RentaCarDbContext))]
-    [Migration("20250322141057_Initial")]
+    [Migration("20250322163054_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -265,7 +265,7 @@ namespace RentaCar.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<long>("Age")
+                    b.Property<long?>("Age")
                         .HasColumnType("bigint");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -312,7 +312,7 @@ namespace RentaCar.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Pk")
+                    b.Property<int?>("Pk")
                         .HasColumnType("int");
 
                     b.Property<string>("ProfilePicture")
@@ -325,7 +325,6 @@ namespace RentaCar.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -347,7 +346,8 @@ namespace RentaCar.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.HasIndex("UserName")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });

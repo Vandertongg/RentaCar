@@ -8,22 +8,13 @@ namespace RentaCar.RealEstateManager.Database.Data.Entities
     public class User : IdentityUser
     {
         [Key]
-        public int Pk { get; set; }
-
-       
+        public int? Pk { get; set; }
         public string IdentificationNumber { get; set; } = null!;
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
 
-       
-        public override string UserName { get; set; } = null!;
-
-       
-        public override string? Email { get; set; } = null!;
-
-        
-        [Range(18, int.MinValue, ErrorMessage = "You must be at least 18 years old to be permitted to book!")]
-        public uint Age { get; set; }
+        [Range(18, int.MaxValue, ErrorMessage = "You must be at least 18 years old to be permitted to book!")]
+        public uint? Age { get; set; } = null;
         public string? ProfilePicture { get; set; }
 
         // Навигационно свойство за връзката много към много чрез Booking
