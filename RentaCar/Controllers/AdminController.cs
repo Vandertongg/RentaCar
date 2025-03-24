@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using RentaCar.RealEstateManager.Database.Data.Entities;
 using System.Threading.Tasks;
 
-namespace RentaCar.RealEstateManager.API.Controllers
+namespace RentaCar.Controllers
 {
     [Authorize(Roles = "Admin")] // Само администраторите имат достъп
     public class AdminController : Controller

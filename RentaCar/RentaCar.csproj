@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <Folder Include="RealEstateManager\API\DTOs\" />
-    <Folder Include="RealEstateManager\API\Services\" />
     <Folder Include="RealEstateManager\Docs\" />
     <Folder Include="RealEstateManager\WebApp\Services\" />
   </ItemGroup>

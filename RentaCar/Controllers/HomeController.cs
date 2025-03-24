@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using RentaCar.RealEstateManager.WebApp.Models;
 
-namespace RentaCar.RealEstateManager.API.Controllers
+namespace RentaCar.Controllers
 {
     public class HomeController : Controller
     {

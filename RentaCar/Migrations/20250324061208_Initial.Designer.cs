@@ -12,7 +12,7 @@ using RentaCar.RealEstateManager.Database.Data;
 namespace RentaCar.Migrations
 {
     [DbContext(typeof(RentaCarDbContext))]
-    [Migration("20250322163054_Initial")]
+    [Migration("20250324061208_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

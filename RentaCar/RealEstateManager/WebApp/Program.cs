@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using RentaCar.RealEstateManager.Database.Data;
 using RentaCar.RealEstateManager.Database.Data.Entities;
+using RentaCar.Repositories;
+using RentaCar.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +57,9 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 app.Run();
+
+builder.Services.AddTransient<ICar, CarRepository>();
+builder.Services.AddTransient<CarService>();
 async Task SeedRolesAndAdmin(IServiceProvider serviceProvider)
 {
     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();

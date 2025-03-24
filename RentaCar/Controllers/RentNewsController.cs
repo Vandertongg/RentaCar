@@ -8,24 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using RentaCar.RealEstateManager.Database.Data;
 using RentaCar.RealEstateManager.Database.Data.Entities;
 
-namespace RentaCar.RealEstateManager.API.Controllers
+namespace RentaCar.Controllers
 {
-    public class CarsController : Controller
+    public class RentNewsController : Controller
     {
         private readonly RentaCarDbContext _context;
 
-        public CarsController(RentaCarDbContext context)
+        public RentNewsController(RentaCarDbContext context)
         {
             _context = context;
         }
 
-        // GET: Cars
+        // GET: RentNews
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cars.ToListAsync());
+            return View(await _context.RentNews.ToListAsync());
         }
 
-        // GET: Cars/Details/5
+        // GET: RentNews/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace RentaCar.RealEstateManager.API.Controllers
                 return NotFound();
             }
 
-            var car = await _context.Cars
+            var rentNews = await _context.RentNews
                 .FirstOrDefaultAsync(m => m.Pk == id);
-            if (car == null)
+            if (rentNews == null)
             {
                 return NotFound();
             }
 
-            return View(car);
+            return View(rentNews);
         }
 
-        // GET: Cars/Create
+        // GET: RentNews/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Cars/Create
+        // POST: RentNews/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Pk,Brand,Model,Year,PricePerDay,PassangerSeats,Description,Picture,IsAvailable")] Car car)
+        public async Task<IActionResult> Create([Bind("Pk,NewsPicture,Title,Content,DatePosted")] RentNews rentNews)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(car);
+                _context.Add(rentNews);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(car);
+            return View(rentNews);
         }
 
-        // GET: Cars/Edit/5
+        // GET: RentNews/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace RentaCar.RealEstateManager.API.Controllers
                 return NotFound();
             }
 
-            var car = await _context.Cars.FindAsync(id);
-            if (car == null)
+            var rentNews = await _context.RentNews.FindAsync(id);
+            if (rentNews == null)
             {
                 return NotFound();
             }
-            return View(car);
+            return View(rentNews);
         }
 
-        // POST: Cars/Edit/5
+        // POST: RentNews/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Pk,Brand,Model,Year,PricePerDay,PassangerSeats,Description,Picture,IsAvailable")] Car car)
+        public async Task<IActionResult> Edit(int id, [Bind("Pk,NewsPicture,Title,Content,DatePosted")] RentNews rentNews)
         {
-            if (id != car.Pk)
+            if (id != rentNews.Pk)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace RentaCar.RealEstateManager.API.Controllers
             {
                 try
                 {
-                    _context.Update(car);
+                    _context.Update(rentNews);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CarExists(car.Pk))
+                    if (!RentNewsExists(rentNews.Pk))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace RentaCar.RealEstateManager.API.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(car);
+            return View(rentNews);
         }
 
-        // GET: Cars/Delete/5
+        // GET: RentNews/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace RentaCar.RealEstateManager.API.Controllers
                 return NotFound();
             }
 
-            var car = await _context.Cars
+            var rentNews = await _context.RentNews
                 .FirstOrDefaultAsync(m => m.Pk == id);
-            if (car == null)
+            if (rentNews == null)
             {
                 return NotFound();
             }
 
-            return View(car);
+            return View(rentNews);
         }
 
-        // POST: Cars/Delete/5
+        // POST: RentNews/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var car = await _context.Cars.FindAsync(id);
-            if (car != null)
+            var rentNews = await _context.RentNews.FindAsync(id);
+            if (rentNews != null)
             {
-                _context.Cars.Remove(car);
+                _context.RentNews.Remove(rentNews);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CarExists(int id)
+        private bool RentNewsExists(int id)
         {
-            return _context.Cars.Any(e => e.Pk == id);
+            return _context.RentNews.Any(e => e.Pk == id);
         }
     }
 }
