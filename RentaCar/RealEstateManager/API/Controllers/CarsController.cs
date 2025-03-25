@@ -9,9 +9,9 @@ using RentaCar.RealEstateManager.Database.Data;
 using RentaCar.RealEstateManager.Database.Data.Entities;
 using RentaCar.RealEstateManager.WebApp.Models;
 
-namespace RentaCar.RealEstateManager.API.Controllers 
-{ 
-public class CarsController : Controller
+namespace RentaCar.RealEstateManager.API.Controllers
+{
+    public class CarsController : Controller
     {
         private readonly RentaCarDbContext _context;
 
@@ -21,10 +21,57 @@ public class CarsController : Controller
         }
 
         // GET: Cars
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString, string currentFilter, int? pageNumber)
         {
-            return View(await _context.Cars.ToListAsync());
+
+            // Сортиране
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["BrandSortParm"] = String.IsNullOrEmpty(sortOrder) ? "brand_desc" : "";
+            ViewData["PriceSortParm"] = sortOrder == "Price" ? "price_desc" : "Price";
+
+            // Филтриране
+            if (searchString != null)
+            {
+                pageNumber = 1; // Нулиране на страницата при ново търсене
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            // Започваме със заявка към базата данни
+            var cars = from c in _context.Cars select c;
+
+            // Прилагане на филтър
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                cars = cars.Where(c => c.Brand.Contains(searchString) || c.Model.Contains(searchString));
+            }
+
+            // Прилагане на сортиране
+            switch (sortOrder)
+            {
+                case "brand_desc":
+                    cars = cars.OrderByDescending(c => c.Brand);
+                    break;
+                case "Price":
+                    cars = cars.OrderBy(c => c.PricePerDay);
+                    break;
+                case "price_desc":
+                    cars = cars.OrderByDescending(c => c.PricePerDay);
+                    break;
+                default:
+                    cars = cars.OrderBy(c => c.Brand);
+                    break;
+            }
+
+            // Пагинация (опционално)
+            int pageSize = 10; // Брой елементи на страница
+            return View(await PaginatedList<Car>.CreateAsync(cars.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
+
 
         // GET: Cars/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -115,5 +162,9 @@ public class CarsController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+
+        //Sort and filter
+
     }
 }
