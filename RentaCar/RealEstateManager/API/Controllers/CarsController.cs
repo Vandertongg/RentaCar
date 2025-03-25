@@ -32,7 +32,9 @@ namespace RentaCar.RealEstateManager.API.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                cars = cars.Where(c => c.Brand.Contains(searchString) || c.Model.Contains(searchString));
+                // Промяна за нечувствителност към главни/малки букви
+                searchString = searchString.ToLower();
+                cars = cars.Where(c => c.Brand.ToLower().Contains(searchString) || c.Model.ToLower().Contains(searchString));
             }
 
             // Прилагане на сортиране
@@ -52,8 +54,8 @@ namespace RentaCar.RealEstateManager.API.Controllers
                     break;
             }
 
-            // Пагинация
-            int pageSize = 10; // Брой елементи на страница
+            // Пагинация (пример с 10 записа на страница)
+            int pageSize = 10;
             return View(await PaginatedList<Car>.CreateAsync(cars.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
