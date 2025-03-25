@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using RentaCar.RealEstateManager.Database.Data;
 using RentaCar.RealEstateManager.Database.Data.Entities;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<RentaCarDbContext>(options =>
@@ -55,6 +56,7 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 app.Run();
+
 async Task SeedRolesAndAdmin(IServiceProvider serviceProvider)
 {
     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();

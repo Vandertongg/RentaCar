@@ -18,6 +18,8 @@
     <Folder Include="RealEstateManager\API\Services\" />
     <Folder Include="RealEstateManager\Docs\" />
     <Folder Include="RealEstateManager\WebApp\Services\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentaCar.RealEstateManager.Database.Data;
 using RentaCar.RealEstateManager.Database.Data.Entities;
+using RentaCar.RealEstateManager.WebApp.Models;
 
-namespace RentaCar.RealEstateManager.API.Controllers
-{
-    public class CarsController : Controller
+namespace RentaCar.RealEstateManager.API.Controllers 
+{ 
+public class CarsController : Controller
     {
         private readonly RentaCarDbContext _context;
 
@@ -81,40 +82,6 @@ namespace RentaCar.RealEstateManager.API.Controllers
             return View(car);
         }
 
-        // POST: Cars/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Pk,Brand,Model,Year,PricePerDay,PassangerSeats,Description,Picture,IsAvailable")] Car car)
-        {
-            if (id != car.Pk)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(car);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CarExists(car.Pk))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(car);
-        }
 
         // GET: Cars/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -147,11 +114,6 @@ namespace RentaCar.RealEstateManager.API.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool CarExists(int id)
-        {
-            return _context.Cars.Any(e => e.Pk == id);
         }
     }
 }

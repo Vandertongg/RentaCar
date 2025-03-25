@@ -17,6 +17,10 @@ namespace RentaCar.RealEstateManager.WebApp.Models
         
         public int CurrentPage { get; set; } = 1;
         public int TotalPages { get; set; }
-        public int PageSize { get; set; } = 5; 
+        public int PageSize { get; set; } = 5;
+
+            
+        }
+
     }
-}
+
