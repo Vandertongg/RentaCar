@@ -12,7 +12,7 @@ using RentaCar.RealEstateManager.Database.Data;
 namespace RentaCar.Migrations
 {
     [DbContext(typeof(RentaCarDbContext))]
-    [Migration("20250322163054_Initial")]
+    [Migration("20250325091430_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -175,6 +175,9 @@ namespace RentaCar.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("DATETIME2");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("DATETIME2");

@@ -12,7 +12,7 @@ namespace RentaCar
             PageIndex = pageIndex;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
 
-            AddRange(items);
+            this.AddRange(items);
         }
 
         public bool HasPreviousPage => PageIndex > 1;
@@ -25,5 +25,6 @@ namespace RentaCar
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
     }
+
 
 }

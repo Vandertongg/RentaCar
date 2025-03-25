@@ -1,5 +1,4 @@
-﻿@using RentaCar.RealEstateManager.Database.Data.Entities
-@model IEnumerable<Booking>
+﻿@model IEnumerable<RentaCar.RealEstateManager.Database.Data.Entities.Booking>
 
 @{
     ViewData["Title"] = "Index";
@@ -18,6 +17,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Car)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsApproved)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StartDate)
@@ -39,6 +41,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Car.Pk)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsApproved)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)

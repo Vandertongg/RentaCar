@@ -9,6 +9,18 @@
     <form asp-action="Index" method="get">
         <div>
             <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="Search by Brand or Model..." />
+
+            <select name="sortByField">
+                <option value="Brand">Brand</option>
+                <option value="Price">Price</option>
+                <option value="Year">Year</option>
+            </select>
+
+            <select name="sortOrder">
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+            </select>
+
             <button type="submit">Search</button>
             <a asp-action="Create" class="btn btn-primary">Create New</a>
         </div>
@@ -19,11 +31,11 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["BrandSortParm"]">Brand</a>
+                <a asp-action="Index" asp-route-sortByField="Brand" asp-route-sortOrder="@ViewData["CurrentSortOrder"]">Brand</a>
             </th>
             <th>Model</th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]">Price Per Day</a>
+                <a asp-action="Index" asp-route-sortByField="Price" asp-route-sortOrder="@ViewData["CurrentSortOrder"]">Price Per Day</a>
             </th>
             <th>Year</th>
             <th>Seats</th>

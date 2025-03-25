@@ -16,7 +16,7 @@ namespace RentaCar.RealEstateManager.Database.Data.Entities
         [ForeignKey(nameof(Car))]
         public int CarId { get; set; }
         public Car Car { get; set; } = null!;
-
+        public bool IsApproved { get; set; } = false;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public BookingStatus Status { get; set; } = BookingStatus.Pending;
