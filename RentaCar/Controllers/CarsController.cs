@@ -51,21 +51,58 @@ namespace RentaCar.Controllers
             return View();
         }
 
-        // POST: Cars/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Pk,Brand,Model,Year,PricePerDay,PassangerSeats,Description,Picture,IsAvailable")] Car car)
+        public async Task<IActionResult> Create(CarViewModel model)
         {
             if (ModelState.IsValid)
             {
+                // Прехвърляне на данните от CarViewModel към Car
+                var car = new Car
+                {
+                    Brand = model.Brand,
+                    Model = model.Model,
+                    Year = model.Year,
+                    PricePerDay = model.PricePerDay,
+                    PassangerSeats = model.PassangerSeats,
+                    Description = model.Description,
+                    IsAvailable = model.IsAvailable
+                };
+
+                // Обработка на изображението
+                if (model.PictureFile != null)
+                {
+                    var uniqueFileName = GetUniqueFileName(model.PictureFile.FileName);
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "upload");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await model.PictureFile.CopyToAsync(fileStream);
+                    }
+                    car.Picture = uniqueFileName; // Запазване на името на файла в базата данни
+                }
+
+                // Запис на автомобила в базата данни
                 _context.Add(car);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(car);
+            return View(model);
         }
+
+        private string GetUniqueFileName(string fileName)
+        {
+            return Path.GetFileNameWithoutExtension(fileName)
+                   + "_"
+                   + Guid.NewGuid().ToString().Substring(0, 4)
+                   + Path.GetExtension(fileName);
+        }
+
+
 
         // GET: Cars/Edit/5
         public async Task<IActionResult> Edit(int? id)

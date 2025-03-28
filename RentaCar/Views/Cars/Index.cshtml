@@ -19,6 +19,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Model)
             </th>
+<<<<<<< Updated upstream
             <th>
                 @Html.DisplayNameFor(model => model.Year)
             </th>
@@ -74,5 +75,41 @@
             </td>
         </tr>
 }
+=======
+            <th>Year</th>
+            <th>Seats</th>
+            <th>Available</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var car in Model)
+        {
+            <tr>
+                <td>@car.Brand</td>
+                <td>@car.Model</td>
+                <td>@car.PricePerDay</td>
+                <td>@car.Year</td>
+                <td>@car.PassangerSeats</td>
+                <td>@(car.IsAvailable ? "Yes" : "No")</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(car.Picture))
+                    {
+                        <img src="~/upload/@car.Picture" alt="Car Image" width="100" height="100" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@car.Pk" class="btn btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@car.Pk" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@car.Pk" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+>>>>>>> Stashed changes
     </tbody>
 </table>
