@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentaCar.RealEstateManager.Database.Data;
 using RentaCar.RealEstateManager.Database.Data.Entities;
+using RentaCar.RealEstateManager.WebApp.Models;
 
 namespace RentaCar.RealEstateManager.API.Controllers
 {
@@ -20,10 +21,45 @@ namespace RentaCar.RealEstateManager.API.Controllers
         }
 
         // GET: Cars
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string sortByField, string sortOrder, int? pageNumber)
         {
-            return View(await _context.Cars.ToListAsync());
+            // Сортиране
+            ViewData["CurrentSort"] = sortByField;
+            ViewData["CurrentSortOrder"] = sortOrder;
+
+            // Филтриране
+            var cars = from c in _context.Cars select c;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                // Промяна за нечувствителност към главни/малки букви
+                searchString = searchString.ToLower();
+                cars = cars.Where(c => c.Brand.ToLower().Contains(searchString) || c.Model.ToLower().Contains(searchString));
+            }
+
+            // Прилагане на сортиране
+            switch (sortByField)
+            {
+                case "Brand":
+                    cars = sortOrder == "asc" ? cars.OrderBy(c => c.Brand) : cars.OrderByDescending(c => c.Brand);
+                    break;
+                case "Price":
+                    cars = sortOrder == "asc" ? cars.OrderBy(c => c.PricePerDay) : cars.OrderByDescending(c => c.PricePerDay);
+                    break;
+                case "Year":
+                    cars = sortOrder == "asc" ? cars.OrderBy(c => c.Year) : cars.OrderByDescending(c => c.Year);
+                    break;
+                default:
+                    cars = cars.OrderBy(c => c.Brand);
+                    break;
+            }
+
+            // Пагинация (пример с 10 записа на страница)
+            int pageSize = 10;
+            return View(await PaginatedList<Car>.CreateAsync(cars.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
+
+
 
         // GET: Cars/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -81,40 +117,6 @@ namespace RentaCar.RealEstateManager.API.Controllers
             return View(car);
         }
 
-        // POST: Cars/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Pk,Brand,Model,Year,PricePerDay,PassangerSeats,Description,Picture,IsAvailable")] Car car)
-        {
-            if (id != car.Pk)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(car);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CarExists(car.Pk))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(car);
-        }
 
         // GET: Cars/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -149,9 +151,8 @@ namespace RentaCar.RealEstateManager.API.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CarExists(int id)
-        {
-            return _context.Cars.Any(e => e.Pk == id);
-        }
+
+        //Sort and filter
+
     }
 }

@@ -212,6 +212,7 @@ namespace RentaCar.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CarId = table.Column<int>(type: "int", nullable: false),
+                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
                     StartDate = table.Column<DateTime>(type: "DATETIME2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "DATETIME2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)

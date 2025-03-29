@@ -59,7 +59,7 @@ namespace RentaCar.RealEstateManager.API.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Pk,UserId,CarId,StartDate,EndDate,Status")] Booking booking)
+        public async Task<IActionResult> Create([Bind("Pk,UserId,CarId,IsApproved,StartDate,EndDate,Status")] Booking booking)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace RentaCar.RealEstateManager.API.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Pk,UserId,CarId,StartDate,EndDate,Status")] Booking booking)
+        public async Task<IActionResult> Edit(int id, [Bind("Pk,UserId,CarId,IsApproved,StartDate,EndDate,Status")] Booking booking)
         {
             if (id != booking.Pk)
             {

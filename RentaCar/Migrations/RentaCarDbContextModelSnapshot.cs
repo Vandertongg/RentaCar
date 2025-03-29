@@ -173,6 +173,9 @@ namespace RentaCar.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("DATETIME2");
 
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("DATETIME2");
 
