@@ -4,7 +4,6 @@ namespace RentaCar.RealEstateManager.WebApp.Models
 {
     public class CarViewModel
     {
-
         public int Pk { get; set; }
         public string? Brand { get; set; }
         public string? Model { get; set; }
