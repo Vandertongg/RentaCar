@@ -117,6 +117,43 @@ namespace RentaCar.RealEstateManager.API.Controllers
             return View(car);
         }
 
+        private bool CarExists(int id)
+        {
+            return _context.Cars.Any(e => e.Pk == id);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Car car)
+        {
+            if (id != car.Pk)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(car); // Актуализиране на записа в базата данни
+                    await _context.SaveChangesAsync(); // Запазване на промените
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CarExists(car.Pk))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index)); // Пренасочване към списъка с автомобили
+            }
+            return View(car); // Ако има грешки, върнете формата с текущите данни
+        }
+
 
         // GET: Cars/Delete/5
         public async Task<IActionResult> Delete(int? id)
