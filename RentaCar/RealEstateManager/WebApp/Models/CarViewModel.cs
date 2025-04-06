@@ -11,7 +11,10 @@ namespace RentaCar.RealEstateManager.WebApp.Models
         public decimal PricePerDay { get; set; }
         public int PassangerSeats { get; set; }
         public string? Description { get; set; }
-        public string? Picture { get; set; }
+
+        [Display(Name = "Upload Picture")]
+        public IFormFile? Picture { get; set; }
+        public string? PicturePath { get; set; }
         public bool IsAvailable { get; set; } = true;
     }
 }
