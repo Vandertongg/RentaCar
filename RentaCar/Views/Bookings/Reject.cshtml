@@ -1,0 +1,47 @@
+﻿@model RentaCar.RealEstateManager.Database.Data.Entities.Booking
+
+@{
+    ViewData["Title"] = "Reject Booking";
+}
+
+<h1>Reject Booking</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-4">User</dt>
+            <dd class="col-sm-8">@Model.User?.UserName ?? "No User"</dd>
+
+            <dt class="col-sm-4">Car</dt>
+            <dd class="col-sm-8">@Model.Car?.Model ?? "No Car"</dd>
+
+            <dt class="col-sm-4">Start Date</dt>
+            <dd class="col-sm-8">@Model.StartDate.ToShortDateString()</dd>
+
+            <dt class="col-sm-4">End Date</dt>
+            <dd class="col-sm-8">@Model.EndDate.ToShortDateString()</dd>
+
+            <dt class="col-sm-4">Status</dt>
+            <dd class="col-sm-8">@Model.Status</dd>
+        </dl>
+
+        <!-- Form for rejecting the booking -->
+        <form asp-action="RejectBooking" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Pk" />
+
+            <!-- Optional reason for rejection -->
+            <div class="form-group">
+                <label for="rejectionReason">Reason for Rejection (optional):</label>
+                <textarea id="rejectionReason" name="rejectionReason" rows="3" class="form-control"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-danger">Confirm Rejection</button>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
