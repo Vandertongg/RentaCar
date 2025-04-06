@@ -1,65 +1,118 @@
-﻿@model IEnumerable<RentaCar.RealEstateManager.Database.Data.Entities.Booking>
+﻿@model PaginatedList<RentaCar.RealEstateManager.Database.Data.Entities.Booking>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Bookings";
 }
 
-<h1>Index</h1>
+<h1>Bookings</h1>
 
+<!-- Формуляр за търсене и сортиране -->
+<form method="get" asp-action="Index">
+    <div class="form-row">
+        <!-- Търсене по потребител -->
+        <div class="form-group col-md-4">
+            <label for="searchString">Search by User or Car</label>
+            <input type="text" name="searchString" class="form-control" value="@ViewData["CurrentFilter"]" placeholder="Enter user or car model..." />
+        </div>
+
+        <!-- Сортиране по поле -->
+        <div class="form-group col-md-4">
+            <label for="sortByField">Sort By</label>
+            <select name="sortByField" class="form-control">
+                <option value="User">User</option>
+                <option value="Car">Car</option>
+                <option value="StartDate">Start Date</option>
+                <option value="Status">Status</option>
+            </select>
+        </div>
+
+        <!-- Ред на сортиране -->
+        <div class="form-group col-md-4">
+            <label for="sortOrder">Sort Order</label>
+            <select name="sortOrder" class="form-control">
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Бутони за търсене -->
+    <button type="submit" class="btn btn-primary">Search</button>
+    <a asp-action="Index" class="btn btn-secondary">Clear Filters</a>
+</form>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Create New Booking</a>
 </p>
-<table class="table">
-    <thead>
+<!-- Таблица с данни -->
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Car)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsApproved)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th></th>
+            <th>User</th>
+            <th>Car</th>
+            <th>Is Approved</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Car.Pk)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsApproved)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Pk">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Pk">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Pk">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var booking in Model)
+        {
+            <tr>
+                <!-- Потребителско име -->
+                <td>@booking.User.UserName</td>
+
+                <!-- Модел на автомобил -->
+                <td>@booking.Car.Model</td>
+
+                <!-- Одобрение -->
+                <td>@(booking.IsApproved ? "Yes" : "No")</td>
+
+                <!-- Начална дата -->
+                <td>@booking.StartDate.ToShortDateString()</td>
+
+                <!-- Крайна дата -->
+                <td>@booking.EndDate.ToShortDateString()</td>
+
+                <!-- Статус -->
+                <td>@booking.Status</td>
+
+                <!-- Действия (Edit, Details, Delete) -->
+                <td>
+                    <a asp-action="Edit" asp-route-id="@booking.Pk" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@booking.Pk" class="btn btn-sm btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@booking.Pk" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<!-- Пагинация -->
+<div class="pagination">
+    @if (Model.HasPreviousPage)
+    {
+        <a asp-action="Index"
+           asp-route-pageNumber="@Model.PageIndex - 1"
+           asp-route-searchString="@ViewData["CurrentFilter"]"
+           asp-route-sortByField="@ViewData["CurrentSortField"]"
+           asp-route-sortOrder="@ViewData["CurrentSortOrder"]">Previous</a>
+    }
+
+    Page @Model.PageIndex of @Model.TotalPages
+
+    @if (Model.HasNextPage)
+    {
+        <a asp-action="Index"
+           asp-route-pageNumber="@Model.PageIndex + 1"
+           asp-route-searchString="@ViewData["CurrentFilter"]"
+           asp-route-sortByField="@ViewData["CurrentSortField"]"
+           asp-route-sortOrder="@ViewData["CurrentSortOrder"]">Next</a>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <p>No bookings found matching the filter criteria.</p>
+}

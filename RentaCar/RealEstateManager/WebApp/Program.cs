@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using RentaCar.RealEstateManager.API.Services;
 using RentaCar.RealEstateManager.Database.Data;
 using RentaCar.RealEstateManager.Database.Data.Entities;
 
@@ -9,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<RentaCarDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//Services for Booking
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 
 builder.Services.AddDefaultIdentity<User>(options =>

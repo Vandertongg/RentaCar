@@ -16,5 +16,7 @@ namespace RentaCar.RealEstateManager.WebApp.Models
         public  string? Email { get; set; }
         public uint Age { get; set; }
         public IFormFile? ProfilePicture { get; set; }
+        public string? RoleName { get; set; }
+        public bool IsSelected { get; set; }
     }
 }
