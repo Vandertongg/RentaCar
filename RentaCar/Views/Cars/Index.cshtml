@@ -40,6 +40,7 @@
             <th>Year</th>
             <th>Seats</th>
             <th>Available</th>
+            <th>Picture</th> <!-- Нова колона за изображението -->
             <th>Actions</th>
         </tr>
     </thead>
@@ -54,9 +55,23 @@
                 <td>@car.PassangerSeats</td>
                 <td>@(car.IsAvailable ? "Yes" : "No")</td>
                 <td>
+                    @if (!string.IsNullOrEmpty(car.Picture))
+                    {
+                        <img src="@Url.Content(car.Picture)" alt="Car Picture" style="max-width: 100px; max-height: 100px;" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+                </td>
+
+                <td>
+                    <!-- Колона за действия -->
                     <a asp-action="Edit" asp-route-id="@car.Pk" class="btn btn-warning">Edit</a>
                     <a asp-action="Details" asp-route-id="@car.Pk" class="btn btn-info">Details</a>
                     <a asp-action="Delete" asp-route-id="@car.Pk" class="btn btn-danger">Delete</a>
+
+
                 </td>
             </tr>
         }
