@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using RentaCar.RealEstateManager.API.Services;
 using RentaCar.RealEstateManager.Database.Data;
 using RentaCar.RealEstateManager.Database.Data.Entities;
 using System.ComponentModel.DataAnnotations;
@@ -11,8 +12,6 @@ namespace RentaCar.RealEstateManager.API.Controllers
     {
         private readonly RentaCarDbContext _context;
         private readonly IBookingService _bookingService;
-
-
 
 
         public BookingsController(RentaCarDbContext context,IBookingService bookingService)
