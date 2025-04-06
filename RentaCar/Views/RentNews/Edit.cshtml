@@ -1,50 +1,64 @@
-﻿@using RentaCar.RealEstateManager.Database.Data.Entities
-@model RentNews
+﻿@model RentaCar.RealEstateManager.Database.Data.Entities.RentNews
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit News";
 }
 
-<h1>Edit</h1>
+<h1>Edit News</h1>
 
-<h4>RentNews</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-6">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <!-- Скрито поле за идентификатора -->
             <input type="hidden" asp-for="Pk" />
+
+            <!-- Визуализация на текущата снимка -->
+            @if (!string.IsNullOrEmpty(Model.NewsPicture))
+            {
+                <div class="form-group">
+                    <label>Current Picture:</label><br />
+                    <img src="@Model.NewsPicture" alt="" style="max-width: 200px; max-height: 200px;" />
+                </div>
+            }
+
+            <!-- Поле за качване на нова снимка -->
             <div class="form-group">
-                <label asp-for="NewsPicture" class="control-label"></label>
-                <input asp-for="NewsPicture" class="form-control" />
-                <span asp-validation-for="NewsPicture" class="text-danger"></span>
+                <label for="NewsPicture">Upload New Picture (optional)</label>
+                <input type="file" name="NewsPicture" class="form-control" />
             </div>
+
+            <!-- Поле за заглавие -->
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+
+            <!-- Поле за съдържание -->
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
+                <textarea asp-for="Content" class="form-control"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
+
+            <!-- Поле за дата -->
             <div class="form-group">
                 <label asp-for="DatePosted" class="control-label"></label>
-                <input asp-for="DatePosted" class="form-control" />
+                <input asp-for="DatePosted" type="date" class="form-control" />
                 <span asp-validation-for="DatePosted" class="text-danger"></span>
             </div>
+
+            <!-- Бутон за запазване -->
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

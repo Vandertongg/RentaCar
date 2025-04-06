@@ -1,40 +1,46 @@
-﻿@using RentaCar.RealEstateManager.Database.Data.Entities
-@model RentNews
+﻿@model RentaCar.RealEstateManager.Database.Data.Entities.RentNews
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create News";
 }
 
-<h1>Create</h1>
+<h1>Create News</h1>
 
-<h4>RentNews</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-md-6">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="NewsPicture" class="control-label"></label>
-                <input asp-for="NewsPicture" class="form-control" />
-                <span asp-validation-for="NewsPicture" class="text-danger"></span>
-            </div>
+
+            <!-- Поле за заглавие -->
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+
+            <!-- Поле за съдържание -->
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
+                <textarea asp-for="Content" class="form-control"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
+
+            <!-- Поле за дата -->
             <div class="form-group">
                 <label asp-for="DatePosted" class="control-label"></label>
-                <input asp-for="DatePosted" class="form-control" />
+                <input asp-for="DatePosted" type="date" class="form-control" />
                 <span asp-validation-for="DatePosted" class="text-danger"></span>
             </div>
+
+            <!-- Поле за качване на снимка -->
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label for="NewsPicture">Upload Picture</label>
+                <input type="file" name="NewsPicture" class="form-control" />
+            </div>
+
+            <!-- Бутон за създаване -->
+            <div class="form-group">
+                <input type="submit" value="Create News" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -45,5 +51,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

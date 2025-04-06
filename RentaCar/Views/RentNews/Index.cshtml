@@ -1,54 +1,146 @@
-﻿@using RentaCar.RealEstateManager.Database.Data.Entities
-@model IEnumerable<RentNews>
+﻿@model RentaCar.RealEstateManager.WebApp.Models.RentNewsFilterViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "RentaNews";
 }
+<h1>Rent News</h1>
 
-<h1>Index</h1>
-
+<!-- Бутон за създаване на нов запис -->
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
-<table class="table">
+
+<!-- Филтър -->
+<form method="get" asp-action="Index">
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="Title">Title</label>
+            <input type="text" name="title" value="@Model.Title" class="form-control" placeholder="Search by title" />
+        </div>
+        <div class="form-group col-md-3">
+            <label for="Content">Content</label>
+            <input type="text" name="content" value="@Model.Content" class="form-control" placeholder="Search by content" />
+        </div>
+        <div class="form-group col-md-2">
+            <label for="FromDate">From Date</label>
+            <input type="date" name="fromDate" value="@Model.FromDate?.ToString("yyyy-MM-dd")" class="form-control" />
+        </div>
+        <div class="form-group col-md-2">
+            <label for="ToDate">To Date</label>
+            <input type="date" name="toDate" value="@Model.ToDate?.ToString("yyyy-MM-dd")" class="form-control" />
+        </div>
+    </div>
+
+    <!-- Бутон за филтриране -->
+    <button type="submit" class="btn btn-primary">Filter</button>
+
+    <!-- Бутон за изчистване на филтрите -->
+    <a asp-action="Index" class="btn btn-secondary">Clear Filters</a>
+</form>
+
+<!-- Таблица с резултатите -->
+<table class="table table-striped mt-3">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NewsPicture)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DatePosted)
-            </th>
-            <th></th>
+            <th>Picture</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Date Posted</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NewsPicture)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DatePosted)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Pk">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Pk">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Pk">Delete</a>
-            </td>
-        </tr>
-}
+        @if (Model.RentNews != null && Model.RentNews.Any())
+        {
+            @foreach (var item in Model.RentNews)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.NewsPicture))
+                        {
+                            <img src="@item.NewsPicture" alt="@item.Title Picture" style="max-width: 100px;" />
+                        }
+                        else
+                        {
+                            <span>No Image</span>
+                        }
+                    </td>
+                    <td>@item.Title</td>
+                    <td>@item.Content</td>
+                    <td>@item.DatePosted.ToString("MMMM dd, yyyy")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Pk" class="btn btn-warning btn-sm">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Pk" class="btn btn-info btn-sm">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Pk" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="5">No results found.</td></tr>
+        }
     </tbody>
 </table>
+
+<!-- Пагинация -->
+<nav aria-label="Page navigation">
+    @if (Model.RentNews != null)
+    {
+        <ul class="pagination">
+            @if (Model.RentNews.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a asp-action="Index"
+                       asp-route-pageNumber="@((Model.RentNews.PageIndex - 1))"
+                       asp-route-title="@Model.Title"
+                       asp-route-content="@Model.Content"
+                       asp-route-fromDate="@Model.FromDate"
+                       asp-route-toDate="@Model.ToDate"
+                       class="page-link">Previous</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled"><span class="page-link">Previous</span></li>
+            }
+
+            @for (var i = 1; i <= Model.RentNews.TotalPages; i++)
+            {
+                if (i == Model.RentNews.PageIndex)
+                {
+                    <li class="page-item active"><span class="page-link">@i</span></li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a asp-action="Index"
+                           asp-route-pageNumber="@i"
+                           asp-route-title="@Model.Title"
+                           asp-route-content="@Model.Content"
+                           asp-route-fromDate="@Model.FromDate"
+                           asp-route-toDate="@Model.ToDate"
+                           class="page-link">@i</a>
+                    </li>
+                }
+            }
+
+            @if (Model.RentNews.HasNextPage)
+            {
+                <li class="page-item">
+                    <a asp-action="Index"
+                       asp-route-pageNumber="@((Model.RentNews.PageIndex + 1))"
+                       asp-route-title="@Model.Title"
+                       asp-route-content="@Model.Content"
+                       asp-route-fromDate="@Model.FromDate"
+                       asp-route-toDate="@Model.ToDate"
+                       class="page-link">Next</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled"><span class="page-link">Next</span></li>
+            }
+        </ul>
+    }
+</nav>
