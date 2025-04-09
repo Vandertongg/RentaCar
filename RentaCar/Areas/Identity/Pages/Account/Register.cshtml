@@ -2,78 +2,299 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    ViewBag.HideSidebar = true;
 }
 
-<h1>@ViewData["Title"]</h1>
+@section Styles {
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/favicon.ico" />
 
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div class="form-floating mb-3">
-                <input asp-for="Input.FirstName" type="text" class="form-control" aria-required="true" placeholder="FirstName" />
-                <label asp-for="Input.FirstName" class="form-label">FirstName</label>
-                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.LastName" type="text" class="form-control" aria-required="true" placeholder="LastName" />
-                <label asp-for="Input.LastName" class="form-label">LastName</label>
-                <span asp-validation-for="Input.LastName" class="text-danger"></span>
-            </div>
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.IdentificationNumber" type="text" class="form-control" aria-required="true" placeholder="Identification Number" />
-                <label asp-for="Input.IdentificationNumber" class="form-label">Identification Number</label>
-                <span asp-validation-for="Input.IdentificationNumber" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Password" />
-                <label asp-for="Input.Password" class="form-label">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" type="password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Confirm Password" />
-                <label asp-for="Input.ConfirmPassword" class="form-label">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
+    <!-- slider!!!!!!!!!!! -->
+    <link rel="stylesheet" href="~/css/alones/libs.min.css" />
+
+    <!-- Vrooom Design System Css!!!!!!!!!!!! -->
+    <link rel="stylesheet" href="~/css/alones/vrooom.min.css?v=1.1.01" />
+
+    <!-- Custom Css !!!!!!!!!!!-->
+    <link rel="stylesheet" href="~/css/alones/custom.min.css?v=1.1.01" />
+}
+
+<div class="wrapper">
+    <div class="main-auth-page">
+        <a href="../../dashboard/index.html" class="auth-logo">
+            <img src="../../assets/images/logo.png" class="img-fluid" />
+            <!-- <img src="../../../Logo.png" class="img-fluid" /> -->
+        </a>
+        <div class="clip-board">
+            <div class="container">
+                <div class="row auth-details-card">
+                    <div class="col-lg-12">
+                        <div class="card iq-auth-card mb-0 row">
+                            <img src="~/images/form-car-image-nobackground.png"
+                                 alt="background"
+                                 class="img-fluid w-75 position-absolute"
+                                 style="top: 8%" />
+                            <div class="card-body col-5 offset-7">
+                                <div class="auth-form">
+                                    <h2 class="text-center mb-3">Sign Up</h2>
+                                    <form>
+                                        <p class="text-center">Create Your RentaCar Account.</p>
+                                        <div class="row text-start mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           id="input1"
+                                                           placeholder="First Name" />
+                                                    <label for="input1">First Name</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           id="input2"
+                                                           placeholder="Last Name" />
+                                                    <label for="input2">Last Name</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row text-start mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input asp-for="Input.Email"
+                                                           type="email"
+                                                           class="form-control"
+                                                           id="input3"
+                                                           placeholder="Email"
+                                                           aria-required="true" />
+                                                    <label asp-for="Input.Email">Email</label>
+                                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input asp-for="Input.IdentificationNumber"
+                                                           type="text"
+                                                           class="form-control"
+                                                           id="input4"
+                                                           placeholder="Identification Number"
+                                                           aria-required="true" />
+                                                    <label asp-for="Input.IdentificationNumber">Identification Number</label>
+                                                    <span asp-validation-for="Input.IdentificationNumber" class="text-danger"></span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row text-start mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input type="password"
+                                                           class="form-control"
+                                                           id="input5"
+                                                           placeholder="Password" />
+                                                    <label for="input5">Password</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input type="password"
+                                                           class="form-control"
+                                                           id="input6"
+                                                           placeholder="Confirm Password" />
+                                                    <label for="input6">Confirm Password</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-check d-flex justify-content-center mb-4">
+                                            <input type="checkbox"
+                                                   class="form-check-input"
+                                                   id="termsCondition" />
+                                            <label class="ms-2 form-check-label"
+                                                   for="termsCondition">I agree with the terms of use</label>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-primary">
+                                                Sign Up
+                                            </button>
+                                        </div>
+                                        <div class="text-center mt-3">
+                                            <p>or sign in with others account?</p>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <ul class="list-group list-group-horizontal list-group-flush">
+                                                <li class="list-group-item bg-transparent border-0">
+                                                    <a href="#">
+                                                        <img src="~/images/brands/15.png"
+                                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                                             alt="img60" />
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item bg-transparent border-0">
+                                                    <a href="#">
+                                                        <img src="~/images/brands/08.png"
+                                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                                             alt="gm" />
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item bg-transparent border-0">
+                                                    <a href="#">
+                                                        <img src="~/images/brands/10.png"
+                                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                                             alt="im" />
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item bg-transparent border-0">
+                                                    <a href="#">
+                                                        <img src="~/images/brands/13.png"
+                                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                                             alt="li" />
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </form>
+                                    <div class="new-account mt-3 text-center">
+                                        <p class="mb-0">
+                                            Already have an Account
+                                            <a class="text-primary"
+                                               href="../../dashboard/auth/sign-in.html">Sign in</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="responsive-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="auth-form">
+                    <h2 class="text-center mb-3">Sign Up</h2>
+                    <form class="ath-text-input">
+                        <p class="text-center">Create Your Vrooom Account.</p>
+                        <div class="row text-start mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="input1"
+                                           placeholder="First Name" />
+                                    <label for="input1">First Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="input2"
+                                           placeholder="Last Name" />
+                                    <label for="input2">Last Name</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-start mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="email"
+                                           class="form-control"
+                                           id="input3"
+                                           placeholder="Email" />
+                                    <label for="input3">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="input4"
+                                           placeholder="Phone No" />
+                                    <label for="input4">Phone No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-start mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="password"
+                                           class="form-control"
+                                           id="input5"
+                                           placeholder="Password" />
+                                    <label for="input5">Password</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="password"
+                                           class="form-control"
+                                           id="input6"
+                                           placeholder="Confirm Password" />
+                                    <label for="input6">Confirm Password</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-check d-flex justify-content-center mb-4">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   value=""
+                                   id="termsCondition" />
+                            <label class="ms-2 form-check-label" for="termsCondition">
+                                I agree with the terms of use
+                            </label>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary">Sign Up</button>
+                        </div>
+                        <div class="text-center mt-3">
+                            <p>or sign in with others account?</p>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <ul class="list-group list-group-horizontal list-group-flush">
+                                <li class="list-group-item bg-transparent border-0">
+                                    <a href="#">
+                                        <img src="../../assets/images/brands/15.png"
+                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                             alt="img60" />
+                                    </a>
+                                </li>
+                                <li class="list-group-item bg-transparent border-0">
+                                    <a href="#">
+                                        <img src="../../assets/images/brands/08.png"
+                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                             alt="gm" />
+                                    </a>
+                                </li>
+                                <li class="list-group-item bg-transparent border-0">
+                                    <a href="#">
+                                        <img src="../../assets/images/brands/10.png"
+                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                             alt="im" />
+                                    </a>
+                                </li>
+                                <li class="list-group-item bg-transparent border-0">
+                                    <a href="#">
+                                        <img src="../../assets/images/brands/13.png"
+                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                             alt="li" />
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </form>
-                }
-            }
-        </section>
+                    <div class="new-account mt-3 text-center">
+                        <p class="mb-0">
+                            Already have an Account
+                            <a class="text-primary"
+                               href="../../dashboard/auth/sign-in.html">Sign in</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
