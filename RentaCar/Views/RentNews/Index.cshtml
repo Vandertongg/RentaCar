@@ -1,146 +1,156 @@
 ﻿@model RentaCar.RealEstateManager.WebApp.Models.RentNewsFilterViewModel
 
-@{
-    ViewData["Title"] = "RentaNews";
+@section Styles {
+    <link rel="stylesheet" href="~/css/alones/libs.min.css" />
+    <link rel="stylesheet" href="~/css/alones/vrooom.min.css?v=1.1.01" />
+    <link rel="stylesheet" href="~/css/alones/custom.min.css?v=1.1.01" />
 }
-<h1>Rent News</h1>
 
-<!-- Бутон за създаване на нов запис -->
-<p>
-    <a asp-action="Create" class="btn btn-success">Create New</a>
-</p>
-
-<!-- Филтър -->
-<form method="get" asp-action="Index">
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <label for="Title">Title</label>
-            <input type="text" name="title" value="@Model.Title" class="form-control" placeholder="Search by title" />
+<main style="display: flex; justify-content: center">
+    <div class="col-lg-10">
+        <!-- Hero Banner -->
+        <div class="card card-banner-bg mb-4" style="background-image: url('../images/news-banner.jpg')">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-light">
+                        <h1 class="fw-bold mb-3">RentaNews</h1>
+                        <p class="mb-4" style="font-family: 'Rubik', serif">
+                            Stay updated with the latest news from the world of car rentals
+                        </p>
+                        <a asp-action="Create" class="btn btn-primary">
+                            Create New <i class="fas fa-plus-circle ms-2"></i>
+                        </a>
+                    </div>
+                    <img src="../images/news-icon.png" class="img-fluid w-25" alt="news-icon" />
+                </div>
+            </div>
         </div>
-        <div class="form-group col-md-3">
-            <label for="Content">Content</label>
-            <input type="text" name="content" value="@Model.Content" class="form-control" placeholder="Search by content" />
-        </div>
-        <div class="form-group col-md-2">
-            <label for="FromDate">From Date</label>
-            <input type="date" name="fromDate" value="@Model.FromDate?.ToString("yyyy-MM-dd")" class="form-control" />
-        </div>
-        <div class="form-group col-md-2">
-            <label for="ToDate">To Date</label>
-            <input type="date" name="toDate" value="@Model.ToDate?.ToString("yyyy-MM-dd")" class="form-control" />
-        </div>
-    </div>
 
-    <!-- Бутон за филтриране -->
-    <button type="submit" class="btn btn-primary">Filter</button>
+        <!-- Filter Section -->
+        <div class="sort-filter mb-4">
+            <p style="color: #ca7912; font-weight: 600">
+                filter & sort
+                <i class="fa-solid fa-filter" style="color: #ca7912"></i>
+            </p>
+            <form method="get" asp-action="Index" class="d-flex gap-3">
+                <input type="text"
+                       name="title"
+                       value="@Model.Title"
+                       class="form-control"
+                       placeholder="Search by title"
+                       style="flex: 2" />
 
-    <!-- Бутон за изчистване на филтрите -->
-    <a asp-action="Index" class="btn btn-secondary">Clear Filters</a>
-</form>
+                <input type="text"
+                       name="content"
+                       value="@Model.Content"
+                       class="form-control"
+                       placeholder="Search by content"
+                       style="flex: 2" />
 
-<!-- Таблица с резултатите -->
-<table class="table table-striped mt-3">
-    <thead>
-        <tr>
-            <th>Picture</th>
-            <th>Title</th>
-            <th>Content</th>
-            <th>Date Posted</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.RentNews != null && Model.RentNews.Any())
-        {
-            @foreach (var item in Model.RentNews)
+                <div class="d-flex gap-2" style="flex: 3">
+                    <input type="date"
+                           name="fromDate"
+                           value="@Model.FromDate?.ToString("yyyy-MM-dd")"
+                           class="form-control" />
+
+                    <input type="date"
+                           name="toDate"
+                           value="@Model.ToDate?.ToString("yyyy-MM-dd")"
+                           class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-primary px-4">
+                    <i class="fas fa-search me-2"></i>Filter
+                </button>
+                <a asp-action="Index" class="btn btn-secondary px-4">Clear</a>
+            </form>
+        </div>
+
+        <!-- News Cards -->
+        <div class="row">
+            @if (Model.RentNews != null && Model.RentNews.Any())
             {
-                <tr>
-                    <td>
-                        @if (!string.IsNullOrEmpty(item.NewsPicture))
-                        {
-                            <img src="@item.NewsPicture" alt="@item.Title Picture" style="max-width: 100px;" />
-                        }
-                        else
-                        {
-                            <span>No Image</span>
-                        }
-                    </td>
-                    <td>@item.Title</td>
-                    <td>@item.Content</td>
-                    <td>@item.DatePosted.ToString("MMMM dd, yyyy")</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Pk" class="btn btn-warning btn-sm">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Pk" class="btn btn-info btn-sm">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Pk" class="btn btn-danger btn-sm">Delete</a>
-                    </td>
-                </tr>
-            }
-        }
-        else
-        {
-            <tr><td colspan="5">No results found.</td></tr>
-        }
-    </tbody>
-</table>
-
-<!-- Пагинация -->
-<nav aria-label="Page navigation">
-    @if (Model.RentNews != null)
-    {
-        <ul class="pagination">
-            @if (Model.RentNews.HasPreviousPage)
-            {
-                <li class="page-item">
-                    <a asp-action="Index"
-                       asp-route-pageNumber="@((Model.RentNews.PageIndex - 1))"
-                       asp-route-title="@Model.Title"
-                       asp-route-content="@Model.Content"
-                       asp-route-fromDate="@Model.FromDate"
-                       asp-route-toDate="@Model.ToDate"
-                       class="page-link">Previous</a>
-                </li>
+                @foreach (var item in Model.RentNews)
+                {
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            @if (!string.IsNullOrEmpty(item.NewsPicture))
+                            {
+                                <img src="@item.NewsPicture" class="card-img-top" alt="@item.Title" style="height: 200px; object-fit: cover">
+                            }
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">@item.Title</h5>
+                                <p class="card-text text-muted">@item.Content</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">@item.DatePosted.ToString("MMMM dd, yyyy")</small>
+                                    <div class="btn-group">
+                                        <a asp-action="Edit" asp-route-id="@item.Pk" class="btn btn-sm btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@item.Pk" class="btn btn-sm btn-info">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.Pk" class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
             }
             else
             {
-                <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                <div class="col-12">
+                    <div class="alert alert-warning">No news found</div>
+                </div>
             }
+        </div>
 
-            @for (var i = 1; i <= Model.RentNews.TotalPages; i++)
+        <!-- Pagination -->
+        <nav aria-label="Page navigation" class="mt-4">
+            @if (Model.RentNews != null)
             {
-                if (i == Model.RentNews.PageIndex)
-                {
-                    <li class="page-item active"><span class="page-link">@i</span></li>
-                }
-                else
-                {
-                    <li class="page-item">
-                        <a asp-action="Index"
-                           asp-route-pageNumber="@i"
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @(!Model.RentNews.HasPreviousPage ? "disabled" : "")">
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-pageNumber="@(Model.RentNews.PageIndex - 1)"
                            asp-route-title="@Model.Title"
                            asp-route-content="@Model.Content"
                            asp-route-fromDate="@Model.FromDate"
-                           asp-route-toDate="@Model.ToDate"
-                           class="page-link">@i</a>
+                           asp-route-toDate="@Model.ToDate">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
                     </li>
-                }
-            }
 
-            @if (Model.RentNews.HasNextPage)
-            {
-                <li class="page-item">
-                    <a asp-action="Index"
-                       asp-route-pageNumber="@((Model.RentNews.PageIndex + 1))"
-                       asp-route-title="@Model.Title"
-                       asp-route-content="@Model.Content"
-                       asp-route-fromDate="@Model.FromDate"
-                       asp-route-toDate="@Model.ToDate"
-                       class="page-link">Next</a>
-                </li>
+                    @for (var i = 1; i <= Model.RentNews.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == Model.RentNews.PageIndex ? "active" : "")">
+                            <a class="page-link"
+                               asp-action="Index"
+                               asp-route-pageNumber="@i"
+                               asp-route-title="@Model.Title"
+                               asp-route-content="@Model.Content"
+                               asp-route-fromDate="@Model.FromDate"
+                               asp-route-toDate="@Model.ToDate">@i</a>
+                        </li>
+                    }
+
+                    <li class="page-item @(!Model.RentNews.HasNextPage ? "disabled" : "")">
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-pageNumber="@(Model.RentNews.PageIndex + 1)"
+                           asp-route-title="@Model.Title"
+                           asp-route-content="@Model.Content"
+                           asp-route-fromDate="@Model.FromDate"
+                           asp-route-toDate="@Model.ToDate">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
             }
-            else
-            {
-                <li class="page-item disabled"><span class="page-link">Next</span></li>
-            }
-        </ul>
-    }
-</nav>
+        </nav>
+    </div>
+</main>
