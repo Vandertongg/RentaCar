@@ -6,76 +6,227 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
-                <hr />
-                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                    <label asp-for="Input.Email" class="form-label">Email</label>
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label asp-for="Input.Password" class="form-label">Password</label>
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="checkbox mb-3">
-                    <label asp-for="Input.RememberMe" class="form-label">
-                        <input class="form-check-input" asp-for="Input.RememberMe" />
-                        @Html.DisplayNameFor(m => m.Input.RememberMe)
-                    </label>
-                </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-                </div>
-                <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
-                </div>
-            </form>
-        </section>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to log in.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
+@section Styles {
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/favicon.ico" />
+
+    <!-- slider!!!!!!!!!!! -->
+    <link rel="stylesheet" href="~/css/alones/libs.min.css" />
+
+    <!-- Vrooom Design System Css!!!!!!!!!!!! -->
+    <link rel="stylesheet" href="~/css/alones/vrooom.min.css?v=1.1.01" />
+
+    <!-- Custom Css !!!!!!!!!!!-->
+    <link rel="stylesheet" href="~/css/alones/custom.min.css?v=1.1.01" />
+}
+
+<div class="wrapper">
+    <div class="main-auth-page">
+        <a href="../../dashboard/index.html" class="auth-logo">
+            <img src="../../../Logo.png" class="img-fluid" />
+        </a>
+        <div class="clip-board">
+            <div class="container">
+                <div class="row auth-details-card">
+                    <div class="col-lg-12">
+                        <div class="card iq-auth-card mb-0 row" style="border: none">
+                            <!-- <img
+                              src="../../assets/images/auth/01.webp"
+                              alt="background"
+                              class="img-fluid w-75 position-absolute"
+                              style="top: 8%"
+                            /> -->
+                            <!-- <img
+                              src="../../../images/form-car-image.png"
+                              alt="background"
+                              class="img-fluid w-75 position-absolute"
+                              style="top: 8%"
+                            /> -->
+                            <img src="../../../images/form-car-image-nobackground.png"
+                                 alt="background"
+                                 class="img-fluid w-75 position-absolute"
+                                 style="top: -12%" />
+                            <div class="card-body col-5 offset-7">
+                                <div class="auth-form">
+                                    <h2 class="text-center mb-3">Sign In</h2>
+                                    <form>
+                                        <p class="text-center">Sign in to stay connected.</p>
+                                        <div class="row text-start mb-3">
+                                            <div class="col-12 mb-3">
+                                                <div class="form-floating">
+                                                    <input type="email"
+                                                           class="form-control"
+                                                           id="input1"
+                                                           placeholder="Email" />
+                                                    <label for="input1">Email</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mb-3">
+                                                <div class="form-floating">
+                                                    <input type="password"
+                                                           class="form-control"
+                                                           id="input2"
+                                                           placeholder="Password" />
+                                                    <label for="input2">Password</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                            <div class="form-group">
+                                                <div class="form-check">
+                                                    <input class="form-check-input"
+                                                           type="checkbox"
+                                                           id="Remember" />
+                                                    <label class="form-check-label" for="Remember">Remember me?</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <a href="#">Forgot Password?</a>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-primary">
+                                                Sign In
+                                            </button>
+                                        </div>
+                                        <div class="text-center mt-3">
+                                            <p>or sign in with others account?</p>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <ul class="list-group list-group-horizontal list-group-flush">
+                                                <li class="list-group-item bg-transparent border-0">
+                                                    <a href="#">
+                                                        <img src="../../assets/images/brands/15.png"
+                                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                                             alt="img60" />
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item bg-transparent border-0">
+                                                    <a href="#">
+                                                        <img src="../../assets/images/brands/08.png"
+                                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                                             alt="gm" />
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item bg-transparent border-0">
+                                                    <a href="#">
+                                                        <img src="../../assets/images/brands/10.png"
+                                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                                             alt="im" />
+                                                    </a>
+                                                </li>
+                                                <li class="list-group-item bg-transparent border-0">
+                                                    <a href="#">
+                                                        <img src="../../assets/images/brands/13.png"
+                                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                                             alt="li" />
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </form>
+                                    <div class="new-account mt-3 text-center">
+                                        <p>
+                                            Don't have an account?
+                                            <a class="" href="../../dashboard/auth/sign-up.html">Click here to sign up</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="responsive-card auth-small">
+        <div class="card">
+            <div class="card-body">
+                <div class="auth-form">
+                    <h2 class="text-center mb-3">Sign In</h2>
+                    <form>
+                        <p class="text-center">Sign in to stay connected.</p>
+                        <div class="row text-start mb-3">
+                            <div class="col-12 mb-3">
+                                <div class="form-floating">
+                                    <input type="email"
+                                           class="form-control"
+                                           id="input1"
+                                           placeholder="Email" />
+                                    <label for="input1">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <div class="form-floating">
+                                    <input type="password"
+                                           class="form-control"
+                                           id="input2"
+                                           placeholder="Password" />
+                                    <label for="input2">Password</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           id="checkMe" />
+                                    <label class="form-check-label" for="checkMe">Remember me?</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <a href="#">Forgot Password?</a>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary">Sign In</button>
+                        </div>
+                        <div class="text-center mt-3">
+                            <p>or sign in with others account?</p>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <ul class="list-group list-group-horizontal list-group-flush">
+                                <li class="list-group-item bg-transparent border-0">
+                                    <a href="#">
+                                        <img src="~/images/brands/15.png"
+                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                             alt="img60" />
+                                    </a>
+                                </li>
+                                <li class="list-group-item bg-transparent border-0">
+                                    <a href="#">
+                                        <img src="~/images/brands/08.png"
+                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                             alt="gm" />
+                                    </a>
+                                </li>
+                                <li class="list-group-item bg-transparent border-0">
+                                    <a href="#">
+                                        <img src="~/images/brands/10.png"
+                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                             alt="im" />
+                                    </a>
+                                </li>
+                                <li class="list-group-item bg-transparent border-0">
+                                    <a href="#">
+                                        <img src="~/images/brands/13.png"
+                                             class="img-fluid avatar avatar-30 avatar-rounded"
+                                             alt="li" />
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </form>
-                }
-            }
-        </section>
+                    <div class="new-account mt-3 text-center">
+                        <p>
+                            Don't have an account?
+                            <a class="" href="../../dashboard/auth/sign-up.html">Click here to sign up</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
