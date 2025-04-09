@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "Aquire";
+  src: url("~/fonts/Aquire-BW0ox.otf") format("opentype");
+}
+
+/* Apply the font */
+* {
+  font-family: "Aquire", sans-serif;
+}

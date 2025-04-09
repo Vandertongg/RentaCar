@@ -1,0 +1,36 @@
+footer {
+  height: 50vh;
+  /* background-color: #b2dbff; */
+  background-color: aliceblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15em;
+  margin-top: 5em;
+}
+
+footer .column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2em;
+}
+
+footer .identity img {
+  max-width: 250px;
+}
+
+footer li {
+  margin-left: 0.1em;
+  padding-bottom: 1em;
+}
+
+footer .cars,
+.resources {
+  margin-bottom: 6em;
+}
+
+.socials .fa-brands {
+  font-size: 30px;
+  /* margin-left: 30em; */
+}

@@ -1,0 +1,52 @@
+.request-car {
+  margin: 2em 1em 0 1em;
+}
+
+.request-car #title-question {
+  width: 40%;
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid rgb(218, 10, 10);
+  margin-bottom: 0.2em;
+}
+
+.request-car .alert {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 2em;
+  color: rgb(218, 10, 10);
+}
+
+.request-car .when-how-long {
+  width: 34%;
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid rgb(218, 10, 10);
+}
+
+.request-car #datepickerfields {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em 0 2em 0;
+}
+
+#datepickerfields .datepickerfield {
+  width: 45%;
+}
+
+#result {
+  padding: 3em 0 3em 0;
+}
+
+#result h4 {
+  margin-bottom: 1em;
+}
+
+#buttons {
+  padding: 1em 0;
+  display: flex;
+  gap: 2em;
+}
+
+#buttons .cancel:hover {
+  color: rgb(218, 10, 10);
+  box-shadow: 0 0 25px rgba(218, 10, 10, 0.549);
+}

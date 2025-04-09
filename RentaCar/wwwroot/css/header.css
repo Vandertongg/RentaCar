@@ -1,0 +1,59 @@
+header {
+  background-color: aliceblue;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10em;
+}
+/* .image */
+header a img {
+  max-width: 150px;
+  margin: 0 75px;
+}
+
+header .nav {
+  display: flex;
+  gap: 2em;
+}
+
+header .search-register {
+  display: flex;
+  gap: 1em;
+  position: relative;
+  align-items: center;
+}
+
+header .search-register #search {
+  border-radius: 7px;
+  border: 1px solid black;
+  padding: 0.5em 1em;
+  position: relative;
+}
+
+header .search-register .fa-searchengin {
+  position: absolute;
+  right: 133px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+}
+
+.search-register .register-btn {
+  letter-spacing: 1px;
+  border: 3px solid rgb(218, 10, 10);
+  border-radius: 10px;
+  padding: 0.5em 1em;
+  background-color: rgb(245, 105, 105);
+  transition: background 0.3s, border 0.3s;
+}
+
+.search-register .register-btn:hover {
+  background-color: rgb(255, 80, 80);
+  border-color: rgb(180, 0, 0);
+}
+
+.search-register .register-btn a {
+  font-weight: 800;
+  color: white;
+  text-decoration: none;
+}
