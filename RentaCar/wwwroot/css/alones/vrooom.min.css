@@ -330,7 +330,7 @@ th {
 label {
   display: inline-block;
 }
-button {
+/*button {
   -webkit-border-radius: 0;
   border-radius: 0;
 }
@@ -350,7 +350,7 @@ textarea {
 button,
 select {
   text-transform: none;
-}
+}*/
 [role="button"] {
   cursor: pointer;
 }
