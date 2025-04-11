@@ -66,7 +66,7 @@ async Task SeedRolesAndAdmin(IServiceProvider serviceProvider)
     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
 
-    // Създаване на роли
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
     string[] roleNames = { "Admin", "User", "MehanicBasic", "MehanicAdvanced", "MehanicSpecialized" };
 
     foreach (var roleName in roleNames)
@@ -77,7 +77,7 @@ async Task SeedRolesAndAdmin(IServiceProvider serviceProvider)
         }
     }
 
-    // Създаване на администратор
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     string adminEmail = "admin@rentacar.com";
     string adminPassword = "Admin123!";
 
@@ -100,7 +100,7 @@ async Task SeedRolesAndAdmin(IServiceProvider serviceProvider)
         }
     }
 
-    // Създаване на механици
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     string mehanicBasicEmail = "mehanic.basic@rentacar.com";
     string mehanicBasicPassword = "MehanicBasic123!";
     string mehanicAdvancedEmail = "mehanic.advanced@rentacar.com";

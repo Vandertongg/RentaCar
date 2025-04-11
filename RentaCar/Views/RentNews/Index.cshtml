@@ -17,9 +17,12 @@
                         <p class="mb-4" style="font-family: 'Rubik', serif">
                             Stay updated with the latest news from the world of car rentals
                         </p>
-                        <a asp-action="Create" class="btn btn-primary">
-                            Create New <i class="fas fa-plus-circle ms-2"></i>
-                        </a>
+                        @if (User.IsInRole("Admin") || User.IsInRole("MehanicSpecialized"))
+                        {
+                            <a asp-action="Create" class="btn btn-primary">
+                                Create New <i class="fas fa-plus-circle ms-2"></i>
+                            </a>
+                        }
                     </div>
                     <img src="../images/news-icon.png" class="img-fluid w-25" alt="news-icon" />
                 </div>
@@ -34,29 +37,29 @@
             </p>
             <form method="get" asp-action="Index" class="d-flex gap-3">
                 <input type="text"
-                       name="title"
-                       value="@Model.Title"
-                       class="form-control"
-                       placeholder="Search by title"
-                       style="flex: 2" />
+                name="title"
+                value="@Model.Title"
+                class="form-control"
+                placeholder="Search by title"
+                style="flex: 2" />
 
                 <input type="text"
-                       name="content"
-                       value="@Model.Content"
-                       class="form-control"
-                       placeholder="Search by content"
-                       style="flex: 2" />
+                name="content"
+                value="@Model.Content"
+                class="form-control"
+                placeholder="Search by content"
+                style="flex: 2" />
 
                 <div class="d-flex gap-2" style="flex: 3">
                     <input type="date"
-                           name="fromDate"
-                           value="@Model.FromDate?.ToString("yyyy-MM-dd")"
-                           class="form-control" />
+                    name="fromDate"
+                    value="@Model.FromDate?.ToString("yyyy-MM-dd")"
+                    class="form-control" />
 
                     <input type="date"
-                           name="toDate"
-                           value="@Model.ToDate?.ToString("yyyy-MM-dd")"
-                           class="form-control" />
+                    name="toDate"
+                    value="@Model.ToDate?.ToString("yyyy-MM-dd")"
+                    class="form-control" />
                 </div>
 
                 <button type="submit" class="btn btn-primary px-4">
@@ -84,14 +87,18 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <small class="text-muted">@item.DatePosted.ToString("MMMM dd, yyyy")</small>
                                     <div class="btn-group">
-                                        <a asp-action="Edit" asp-route-id="@item.Pk" class="btn btn-sm btn-warning">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
+                                        @if (User.IsInRole("Admin") || User.IsInRole("MehanicSpecialized"))
+                                        {
+                                            <a asp-action="Edit" asp-route-id="@item.Pk" class="btn btn-sm btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+
+                                            <a asp-action="Delete" asp-route-id="@item.Pk" class="btn btn-sm btn-danger">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        }
                                         <a asp-action="Details" asp-route-id="@item.Pk" class="btn btn-sm btn-info">
                                             <i class="fas fa-info-circle"></i>
-                                        </a>
-                                        <a asp-action="Delete" asp-route-id="@item.Pk" class="btn btn-sm btn-danger">
-                                            <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </div>
                                 </div>

@@ -1,74 +1,289 @@
 ﻿@model RentaCar.RealEstateManager.Database.Data.Entities.Booking
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Booking";
 }
 
-<h1>Create Booking</h1>
+@section Styles {
+    <style>
+        .booking-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            @Html.AntiForgeryToken()
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        .booking-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 20px;
+        }
 
-            <!-- Dropdown за избор на потребител -->
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.Users">
-                    <option value="">-- Select User --</option>
-                </select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-
-            <!-- Dropdown за избор на автомобил -->
-            <div class="form-group">
-                <label asp-for="CarId" class="control-label"></label>
-                <select asp-for="CarId" class="form-control" asp-items="ViewBag.Cars">
-                    <option value="">-- Select Car --</option>
-                </select>
-                <span asp-validation-for="CarId" class="text-danger"></span>
-            </div>
-
-            <!-- Поле IsApproved: Показва се само за Admin и MehanicSpecialized -->
-            @if (User.IsInRole("Admin") || User.IsInRole("MehanicSpecialized"))
-            {
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="IsApproved" /> @Html.DisplayNameFor(model => model.IsApproved)
-                    </label>
-                </div>
+            .booking-header h1 {
+                font-size: 2.2rem;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 10px;
             }
 
-            <!-- Полета за дати -->
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" type="date" class="form-control" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
-            </div>
+            .booking-header p {
+                color: #666;
+                font-size: 1.1rem;
+            }
 
-            <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input asp-for="EndDate" type="date" class="form-control" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
+        .form-group {
+            margin-bottom: 25px;
+        }
 
-            <!-- Падащото меню за Status е премахнато -->
-            <!-- Бутон за създаване -->
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #495057;
+            display: block;
+        }
+
+        .form-control {
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+            .form-control:focus {
+                border-color: #ca7912;
+                box-shadow: 0 0 0 0.25rem rgba(202, 121, 18, 0.25);
+            }
+
+        .form-select {
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+            .form-select:focus {
+                border-color: #ca7912;
+                box-shadow: 0 0 0 0.25rem rgba(202, 121, 18, 0.25);
+            }
+
+        .form-check-input:checked {
+            background-color: #ca7912;
+            border-color: #ca7912;
+        }
+
+        .booking-form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .booking-form-col {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .date-picker-section {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .date-picker-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+            .date-picker-header svg {
+                margin-right: 10px;
+                color: #ca7912;
+            }
+
+            .date-picker-header h4 {
+                margin: 0;
+                font-size: 1.2rem;
+                color: #333;
+            }
+
+        #datepickerfields {
+            display: flex;
+            gap: 15px;
+        }
+
+        .datepickerfield {
+            flex: 1;
+        }
+
+            .datepickerfield p {
+                margin-bottom: 8px;
+                font-weight: 500;
+                color: #495057;
+            }
+
+        .price-calculation {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+            .price-calculation h4 {
+                font-size: 1.1rem;
+                color: #495057;
+                margin-bottom: 10px;
+            }
+
+            .price-calculation h3 {
+                font-size: 1.8rem;
+                color: #ca7912;
+                margin: 0;
+            }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-primary {
+            background-color: #ca7912;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            color: white;
+            transition: background-color 0.3s;
+            flex: 1;
+        }
+
+            .btn-primary:hover {
+                background-color: #b06a10;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            color: white;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            text-align: center;
+            flex: 1;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                color: white;
+            }
+
+        
+    </style>
+}
+
+<div class="booking-container">
+    <div class="booking-header">
+        <h1>Create New Booking</h1>
+        <p>Fill in the details below to reserve a car</p>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="booking-form-row">
+            <div class="booking-form-col">
+                <!-- Dropdown за избор на потребител -->
+                <div class="form-group">
+                    <label asp-for="UserId" class="form-label">Select User</label>
+                    <select asp-for="UserId" class="form-select" asp-items="ViewBag.Users">
+                        <option value="">-- Select User --</option>
+                    </select>
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="booking-form-col">
+                <!-- Dropdown за избор на автомобил -->
+                <div class="form-group">
+                    <label asp-for="CarId" class="form-label">Select Car</label>
+                    <select asp-for="CarId" class="form-select" asp-items="ViewBag.Cars" id="carSelect">
+                        <option value="">-- Select Car --</option>
+                    </select>
+                    <span asp-validation-for="CarId" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Поле IsApproved: Показва се само за Admin и MehanicSpecialized -->
+        @if (User.IsInRole("Admin") || User.IsInRole("MehanicSpecialized"))
+        {
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsApproved" /> @Html.DisplayNameFor(model => model.IsApproved)
+                </label>
+            </div>
+        }
+
+        <!-- Секция за избор на дати -->
+        <div class="date-picker-section">
+            <div class="date-picker-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <h4>Select Booking Dates</h4>
+            </div>
+
+            <div id="datepickerfields">
+                <div class="datepickerfield">
+                    <p>From:</p>
+                    <input asp-for="StartDate" type="date" class="form-control" id="startDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="datepickerfield">
+                    <p>Until (includes):</p>
+                    <input asp-for="EndDate" type="date" class="form-control" id="endDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Бутони -->
+        <div class="btn-container">
+            @if (User.Identity.IsAuthenticated)
+            {
+                
+                    <button type="submit" class="btn-primary">Create Booking</button>
+             
+                
+            }
+            else
+            {
+                <a asp-area="Identity" asp-page="/Account/Login" class="btn-primary">Login to Book</a>
+            }
+            <a asp-action="Index" class="btn-secondary">Cancel</a>
+        </div>
+
+    </form>
 </div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+   
 }

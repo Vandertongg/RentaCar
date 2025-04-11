@@ -2,42 +2,128 @@
 @model RentNews
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Детайли за новината";
 }
 
-<h1>Details</h1>
+@section Styles {
+    <style>
+        .news-details-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
 
-<div>
-    <h4>RentNews</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NewsPicture)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NewsPicture)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DatePosted)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DatePosted)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Pk">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+        .news-header {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 15px;
+        }
+
+        .news-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 10px;
+        }
+
+        .news-date {
+            font-size: 0.9rem;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .news-image-container {
+            margin-bottom: 25px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            max-height: 500px;
+        }
+
+        .news-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #495057;
+            margin-bottom: 30px;
+            white-space: pre-line;
+        }
+
+        .news-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-edit {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background-color: #0b5ed7;
+            text-decoration: none;
+            color: white;
+        }
+
+        
+    </style>
+}
+
+<div class="news-details-container">
+    <div class="news-header">
+        <h1 class="news-title">@Model.Title</h1>
+        <p class="news-date">Публикувано на: @Model.DatePosted.ToString("dd MMMM yyyy, HH:mm")</p>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.NewsPicture))
+    {
+        <div class="news-image-container">
+            <img src="@Url.Content(Model.NewsPicture)" alt="@Model.Title" class="news-image" />
+        </div>
+    }
+
+    <div class="news-content">
+        @Model.Content
+    </div>
+
+    <div class="news-actions">
+        @if (User.IsInRole("Admin") || User.IsInRole("MehanicSpecialized"))
+        {
+        <a asp-action="Edit" asp-route-id="@Model?.Pk" class="btn-edit">Редактирай</a>
+        }
+        <a asp-action="Index" class="btn-back">Назад към списъка</a>
+
+    </div>
 </div>
