@@ -68,7 +68,7 @@
 
         <!-- News Cards -->
         <div class="row">
-            @if (Model.RentNews != null && Model.RentNews.Any())
+            @if (Model?.RentNews != null && Model.RentNews.Any())
             {
                 @foreach (var item in Model.RentNews)
                 {

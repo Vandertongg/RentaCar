@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentaCar.RealEstateManager.API.Services;
@@ -21,6 +22,7 @@ namespace RentaCar.RealEstateManager.API.Controllers
         }
 
         // GET: Bookings
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index(string searchString, string sortByField, string sortOrder, int pageNumber = 1)
 {
     // Задаване на текущите филтри
