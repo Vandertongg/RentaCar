@@ -80,7 +80,16 @@ namespace RentaCar.RealEstateManager.API.Controllers
                 return NotFound();
             }
 
-            return View(car);
+            var booking = await _context.Bookings
+                .FirstOrDefaultAsync(b => b.CarId == id);
+
+            var viewModel = new ViewModels
+            {
+                CarItem = car,
+                BookingItem = booking
+            };
+
+            return View(viewModel);
         }
 
         // GET: Cars/Create

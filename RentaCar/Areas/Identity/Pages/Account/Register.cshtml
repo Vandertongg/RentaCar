@@ -21,9 +21,12 @@
 
 <div class="wrapper">
     <div class="main-auth-page">
-        <a href="../../dashboard/index.html" class="auth-logo">
-            <img src="../../assets/images/logo.png" class="img-fluid" />
-            <!-- <img src="../../../Logo.png" class="img-fluid" /> -->
+        <!--<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"
+        style="width: 25%; position: relative; z-index: 3">
+            <img src="~/Logo.png" alt="" class="img-fluid"/>
+        </a>-->
+        <a class="auth-logo" asp-area="" asp-controller="Home" asp-action="Index">
+            <img src="~/Logo.png" alt="" class="img-fluid" />
         </a>
         <div class="clip-board">
             <div class="container">
@@ -37,25 +40,30 @@
                             <div class="card-body col-5 offset-7">
                                 <div class="auth-form">
                                     <h2 class="text-center mb-3">Sign Up</h2>
-                                    <form>
+                                    <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
                                         <p class="text-center">Create Your RentaCar Account.</p>
                                         <div class="row text-start mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating">
                                                     <input type="text"
+                                                           asp-for="Input.FirstName"
                                                            class="form-control"
                                                            id="input1"
+                                                           aria-required="true"
                                                            placeholder="First Name" />
-                                                    <label for="input1">First Name</label>
+                                                    <label asp-for="Input.FirstName">First Name</label>
+                                                    <span asp-validation-for="Input.FirstName" class="text-danger" asp-route-returnUrl="@Model.ReturnUrl" method="post"></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
-                                                    <input type="text"
+                                                    <input type="text" asp-for="Input.LastName"
                                                            class="form-control"
                                                            id="input2"
+                                                           aria-required="true"
                                                            placeholder="Last Name" />
-                                                    <label for="input2">Last Name</label>
+                                                    <label asp-for="Input.LastName">Last Name</label>
+                                                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -90,20 +98,26 @@
                                         <div class="row text-start mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating">
-                                                    <input type="password"
+                                                    <input asp-for="Input.Password"
+                                                           aria-required="true"
+                                                           type="password"
                                                            class="form-control"
                                                            id="input5"
                                                            placeholder="Password" />
-                                                    <label for="input5">Password</label>
+                                                    <label asp-for="Input.Password">Password</label>
+                                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
-                                                    <input type="password"
+                                                    <input asp-for="Input.ConfirmPassword"
+                                                           aria-required="true"
+                                                           type="password"
                                                            class="form-control"
                                                            id="input6"
                                                            placeholder="Confirm Password" />
-                                                    <label for="input6">Confirm Password</label>
+                                                    <label asp-for="Input.ConfirmPassword" for="input6">Confirm Password</label>
+                                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -115,7 +129,7 @@
                                                    for="termsCondition">I agree with the terms of use</label>
                                         </div>
                                         <div class="text-center">
-                                            <button type="button" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-primary">
                                                 Sign Up
                                             </button>
                                         </div>
@@ -157,9 +171,9 @@
                                     </form>
                                     <div class="new-account mt-3 text-center">
                                         <p class="mb-0">
-                                            Already have an Account
+                                            Already have an account?
                                             <a class="text-primary"
-                                               href="../../dashboard/auth/sign-in.html">Sign in</a>
+                                               asp-area="Identity" asp-page="/Account/Login">Sign in</a>
                                         </p>
                                     </div>
                                 </div>
@@ -175,79 +189,98 @@
             <div class="card-body">
                 <div class="auth-form">
                     <h2 class="text-center mb-3">Sign Up</h2>
-                    <form class="ath-text-input">
-                        <p class="text-center">Create Your Vrooom Account.</p>
+                    <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <p class="text-center">Create Your RentaCar Account.</p>
                         <div class="row text-start mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input type="text"
+                                           asp-for="Input.FirstName"
                                            class="form-control"
                                            id="input1"
+                                           aria-required="true"
                                            placeholder="First Name" />
-                                    <label for="input1">First Name</label>
+                                    <label asp-for="Input.FirstName">First Name</label>
+                                    <span asp-validation-for="Input.FirstName" class="text-danger" asp-route-returnUrl="@Model.ReturnUrl" method="post"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text"
+                                    <input type="text" asp-for="Input.LastName"
                                            class="form-control"
                                            id="input2"
+                                           aria-required="true"
                                            placeholder="Last Name" />
-                                    <label for="input2">Last Name</label>
+                                    <label asp-for="Input.LastName">Last Name</label>
+                                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="row text-start mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email"
+                                    <input asp-for="Input.Email"
+                                           type="email"
                                            class="form-control"
                                            id="input3"
-                                           placeholder="Email" />
-                                    <label for="input3">Email</label>
+                                           placeholder="Email"
+                                           aria-required="true" />
+                                    <label asp-for="Input.Email">Email</label>
+                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
                                 </div>
+
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text"
+                                    <input asp-for="Input.IdentificationNumber"
+                                           type="text"
                                            class="form-control"
                                            id="input4"
-                                           placeholder="Phone No" />
-                                    <label for="input4">Phone No</label>
+                                           placeholder="Identification Number"
+                                           aria-required="true" />
+                                    <label asp-for="Input.IdentificationNumber">Identification Number</label>
+                                    <span asp-validation-for="Input.IdentificationNumber" class="text-danger"></span>
                                 </div>
+
                             </div>
                         </div>
                         <div class="row text-start mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="password"
+                                    <input asp-for="Input.Password"
+                                           aria-required="true"
+                                           type="password"
                                            class="form-control"
                                            id="input5"
                                            placeholder="Password" />
-                                    <label for="input5">Password</label>
+                                    <label asp-for="Input.Password">Password</label>
+                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="password"
+                                    <input asp-for="Input.ConfirmPassword"
+                                           aria-required="true"
+                                           type="password"
                                            class="form-control"
                                            id="input6"
                                            placeholder="Confirm Password" />
-                                    <label for="input6">Confirm Password</label>
+                                    <label asp-for="Input.ConfirmPassword" for="input6">Confirm Password</label>
+                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-check d-flex justify-content-center mb-4">
-                            <input class="form-check-input"
-                                   type="checkbox"
-                                   value=""
+                            <input type="checkbox"
+                                   class="form-check-input"
                                    id="termsCondition" />
-                            <label class="ms-2 form-check-label" for="termsCondition">
-                                I agree with the terms of use
-                            </label>
+                            <label class="ms-2 form-check-label"
+                                   for="termsCondition">I agree with the terms of use</label>
                         </div>
                         <div class="text-center">
-                            <button type="button" class="btn btn-primary">Sign Up</button>
+                            <button type="submit" class="btn btn-primary">
+                                Sign Up
+                            </button>
                         </div>
                         <div class="text-center mt-3">
                             <p>or sign in with others account?</p>
@@ -256,28 +289,28 @@
                             <ul class="list-group list-group-horizontal list-group-flush">
                                 <li class="list-group-item bg-transparent border-0">
                                     <a href="#">
-                                        <img src="../../assets/images/brands/15.png"
+                                        <img src="~/images/brands/15.png"
                                              class="img-fluid avatar avatar-30 avatar-rounded"
                                              alt="img60" />
                                     </a>
                                 </li>
                                 <li class="list-group-item bg-transparent border-0">
                                     <a href="#">
-                                        <img src="../../assets/images/brands/08.png"
+                                        <img src="~/images/brands/08.png"
                                              class="img-fluid avatar avatar-30 avatar-rounded"
                                              alt="gm" />
                                     </a>
                                 </li>
                                 <li class="list-group-item bg-transparent border-0">
                                     <a href="#">
-                                        <img src="../../assets/images/brands/10.png"
+                                        <img src="~/images/brands/10.png"
                                              class="img-fluid avatar avatar-30 avatar-rounded"
                                              alt="im" />
                                     </a>
                                 </li>
                                 <li class="list-group-item bg-transparent border-0">
                                     <a href="#">
-                                        <img src="../../assets/images/brands/13.png"
+                                        <img src="~/images/brands/13.png"
                                              class="img-fluid avatar avatar-30 avatar-rounded"
                                              alt="li" />
                                     </a>
@@ -289,7 +322,7 @@
                         <p class="mb-0">
                             Already have an Account
                             <a class="text-primary"
-                               href="../../dashboard/auth/sign-in.html">Sign in</a>
+                               asp-area="Identity" asp-page="/Account/Login">Sign in</a>
                         </p>
                     </div>
                 </div>
