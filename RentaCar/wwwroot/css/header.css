@@ -23,6 +23,11 @@ header .search-register {
   align-items: center;
 }
 
+    header .search-register .search-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
 header .search-register #search {
   border-radius: 7px;
   border: 1px solid black;
@@ -30,13 +35,23 @@ header .search-register #search {
   position: relative;
 }
 
-header .search-register .fa-searchengin {
-  position: absolute;
-  right: 133px;
+    header .search-register .search-btn {
+        background: none;
+        border: none;
+        /* color: #666; */
+        cursor: pointer;
+        position: absolute;
+        right: 10px;
+        transition: color 0.3s ease;
+    }
+
+    header .search-register .fa-searchengin {
+        /* position: absolute;
+  right: 275px;
   top: 50%;
-  transform: translateY(-50%);
-  font-size: 20px;
-}
+  transform: translateY(-50%);*/
+        font-size: 17px;
+    }
 
 .search-register .register-btn {
   letter-spacing: 1px;

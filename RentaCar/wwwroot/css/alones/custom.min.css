@@ -24,10 +24,10 @@
   }
 }
 .auth-logo {
-  position: absolute;
-  z-index: 2;
-  top: 3rem;
-  left: 3rem;
+    width: 10%;
+    position: absolute;
+    z-index: 2;
+    left: 1.5rem;
 }
 .auth-details-card {
   height: 100vh;
