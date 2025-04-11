@@ -1,5 +1,13 @@
-﻿@using RentaCar.RealEstateManager.Database.Data.Entities
+﻿@using Microsoft.AspNetCore.Identity
+@using RentaCar.RealEstateManager.Database.Data.Entities
 @using RentaCar.RealEstateManager.API.Controllers
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +30,7 @@
             </a>
             <!-- </div> -->
 
-            <ul class="nav">
+            <ul class="navigation">
                 <li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -39,11 +47,19 @@
             <div class="search-register">
                 <input type="text" name="" id="search" placeholder="Search..." />
                 <i class="fa-brands fa-searchengin"></i>
-                <a asp-area="Identity" asp-page="/Account/Register">
-                    <button class="register" style="background-color: #28a745; color: white; border: none; padding: 0.5em 1em; border-radius: 4px; cursor: pointer;">
-                        REGISTER
+                @if (!SignInManager.IsSignedIn(User))
+                {
+
+                    <button class="register-btn" style="cursor: pointer;">
+                        <a asp-area="Identity" asp-page="/Account/Register">REGISTER</a>
                     </button>
-                </a>
+                }
+                else
+                {
+                    <a asp-area="Identity" asp-page="/Account/Manage/Index">
+                        <img src="@user?.ProfilePicture" class="profile-image" alt="No profile image yet" />
+                    </a>
+                }
             </div>
         </header>
     }

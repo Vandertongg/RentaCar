@@ -11,7 +11,7 @@ header a img {
   margin: 0 75px;
 }
 
-header .nav {
+header .navigation {
   display: flex;
   gap: 2em;
 }

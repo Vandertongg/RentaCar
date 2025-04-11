@@ -1,0 +1,30 @@
+﻿@model IEnumerable<UserViewModel>
+@{
+    ViewData["Title"] = "Manage Roles";
+}
+
+<h2>Manage Roles</h2>
+
+<form asp-action="UpdateRoles" method="post">
+    <input type="hidden" name="userId" value="@ViewBag.UserId" />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Role Name</th>
+                <th>Is Selected</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model)
+            {
+                <tr>
+                    <td>@role.RoleName</td>
+                    <td>
+                        <input type="checkbox" name="roles" value="@role.RoleName" @(role.IsSelected ? "checked" : "") />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Update Roles</button>
+</form>
