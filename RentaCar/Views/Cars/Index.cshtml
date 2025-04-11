@@ -1,4 +1,5 @@
 ﻿@model PaginatedList<RentaCar.RealEstateManager.Database.Data.Entities.Car>
+
 @{
     ViewData["Title"] = "Cars";
 }
@@ -211,32 +212,43 @@
                         <option value="desc">Descending</option>
                     </select>
 
-                    <button type="submit" style="float: right; background-color: #ca7912; color: white; border: none; padding: 0.5em 1em; border-radius: 5px;">
+                    <button type="submit">
                         Search <i class="fa-brands fa-searchengin" style="color: white"></i>
                     </button>
                 </form>
             </div>
 
         </div>
-
+        @if (User.IsInRole("Admin") || User.IsInRole("MehanicSpecialized"))
+        {
+        <a asp-action="Create" class="btn btn-primary me-3" style="background-color: #ca7912; border-color: #ca7912;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-1">
+                <path d="M12 4V20M4 12H20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Add New Car
+        </a>
+        }
         <!-- All Cars -->
         <div class="card-transparent bg-white rounded mb-4">
             <div class="card-header">
                 <div class="d-flex justify-content-between">
-                    <h5 class="heading-title">Upcoming Models</h5>
-                    <span class="text-primary"> View More</span>
+                    <h5 class="heading-title">Our Cars</h5>
+                    <span class="text-primary">❮❮ Drag ❯❯ to View More</span>
                 </div>
             </div>
             <div class="card-header swiper-container d-slider2">
                 <div class="swiper-wrapper">
-                    @foreach (var car in Model)
+                    @foreach (var car in Model.OrderBy(a=>a.Pk))
                     {
                         <!--Car item-->
+                        
                         <div class="swiper-slide">
                             <div class="iq-upcoming-cars">
+                                <a href="@Url.Action("Details", new { id = @car.Pk })">
                                 <img src="@Url.Content(car.Picture)"
                                      class="img-fluid w-100"
-                                     alt="img8" />
+                                         alt="img8" />
+                                </a>
                                 <div class="iq-car-details">
                                     <h6 class="text-primary">@car.Year @car.Brand</h6>
                                     <div class="d-flex justify-content-end">
@@ -286,11 +298,13 @@
                                 </div>
                                 <div class="iq-car-price d-flex justify-content-between align-items-center">
                                     <span>Price per day</span>
-                                    <h6>@car.PricePerDay</h6>
+                                    <h6>@car.PricePerDay **dev @car.Pk</h6>
                                 </div>
                             </div>
-                        </div>
+                            </div>
+                        
                         <!--End of Car item-->
+                        
                     }
                 </div>
             </div>

@@ -2,72 +2,228 @@
 @model Car
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create New Car";
 }
 
-<h1>Create</h1>
+@section Styles {
+    <style>
+        .create-car-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
 
-<h4>Car</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Brand" class="control-label"></label>
-                <input asp-for="Brand" class="form-control" />
-                <span asp-validation-for="Brand" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Model" class="control-label"></label>
-                <input asp-for="Model" class="form-control" />
-                <span asp-validation-for="Model" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Year" class="control-label"></label>
-                <input asp-for="Year" class="form-control" />
-                <span asp-validation-for="Year" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PricePerDay" class="control-label"></label>
-                <input asp-for="PricePerDay" class="form-control" />
-                <span asp-validation-for="PricePerDay" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PassangerSeats" class="control-label"></label>
-                <input asp-for="PassangerSeats" class="form-control" />
-                <span asp-validation-for="PassangerSeats" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
+        .create-car-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-            <div class="form-group">
-                <label asp-for="Picture"></label>
-                <input asp-for="Picture" type="file" class="form-control" />
-            </div>
+            .create-car-header h1 {
+                font-size: 2rem;
+                font-weight: 600;
+                color: #333;
+            }
 
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsAvailable" /> @Html.DisplayNameFor(model => model.IsAvailable)
-                </label>
-            </div>
+            .create-car-header .lead {
+                font-size: 1.2rem;
+                color: #666;
+            }
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        .form-control {
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 10px 15px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+            .form-control:focus {
+                border-color: #ca7912;
+                box-shadow: 0 0 0 0.25rem rgba(202, 121, 18, 0.25);
+            }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-check-input:checked {
+            background-color: #ca7912;
+            border-color: #ca7912;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn-primary {
+            background-color: #ca7912;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+            .btn-primary:hover {
+                background-color: #b06a10;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+            }
+
+        .car-form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .car-form-col {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        #imagePreview {
+            margin-top: 15px;
+        }
+
+       
+
+        }
+    </style>
+}
+
+<div class="create-car-container">
+    <div class="create-car-header">
+        <h1>Create New Car</h1>
+        <p class="lead">Fill in the details below to add a new car to the system.</p>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <form method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="car-form-row">
+            <div class="car-form-col">
+                <!-- Основна информация -->
+                <h4 class="mb-3">Basic Information</h4>
+
+                <div class="form-group">
+                    <label asp-for="Brand" class="form-label">Brand</label>
+                    <input asp-for="Brand" class="form-control" placeholder="Enter car brand" />
+                    <span asp-validation-for="Brand" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Model" class="form-label">Model</label>
+                    <input asp-for="Model" class="form-control" placeholder="Enter car model" />
+                    <span asp-validation-for="Model" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Year" class="form-label">Year</label>
+                    <input asp-for="Year" class="form-control" placeholder="Enter production year" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter car description"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="car-form-col">
+                <!-- Детайли и снимка -->
+                <h4 class="mb-3">Details & Image</h4>
+
+                <div class="form-group">
+                    <label asp-for="PricePerDay" class="form-label">Price Per Day (BGN)</label>
+                    <input asp-for="PricePerDay" class="form-control" placeholder="Enter daily rental price" />
+                    <span asp-validation-for="PricePerDay" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PassangerSeats" class="form-label">Passenger Seats</label>
+                    <input asp-for="PassangerSeats" class="form-control" placeholder="Enter number of seats" />
+                    <span asp-validation-for="PassangerSeats" class="text-danger"></span>
+                </div>
+
+                <div class="form-group form-check">
+                    <input class="form-check-input" asp-for="IsAvailable" id="isAvailable" />
+                    <label class="form-check-label" for="isAvailable">Available for rent</label>
+                </div>
+
+                <!-- Снимка -->
+                <div class="form-group mt-4">
+                    <label asp-for="Picture" class="form-label">Car Image</label>
+                    <input asp-for="Picture" type="file" class="form-control" accept="image/*" />
+                    <div id="imagePreview"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Бутони -->
+        <div class="btn-container">
+            <button type="submit" class="btn-primary">Create Car</button>
+            <a asp-action="Index" class="btn-secondary">Cancel</a>
+        </div>
+    </form>
 </div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        // Предварителен преглед на избраната снимка
+        document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const previewContainer = document.getElementById('imagePreview');
+                    previewContainer.innerHTML = '';
+
+                    const img = document.createElement('img');
+                    img.src = event.target.result;
+                    img.alt = 'Preview';
+                    img.style.maxWidth = '200px';
+                    img.style.marginTop = '10px';
+                    img.style.borderRadius = '4px';
+                    img.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+
+                    previewContainer.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 }
