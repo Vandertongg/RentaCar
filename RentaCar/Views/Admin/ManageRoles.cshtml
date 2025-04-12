@@ -3,28 +3,186 @@
     ViewData["Title"] = "Manage Roles";
 }
 
-<h2>Manage Roles</h2>
+<style>
+    /* Основни стилове за страницата */
+    .roles-manage-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
 
-<form asp-action="UpdateRoles" method="post">
-    <input type="hidden" name="userId" value="@ViewBag.UserId" />
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Role Name</th>
-                <th>Is Selected</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var role in Model)
-            {
+    .page-title {
+        font-size: 2.2rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+        position: relative;
+    }
+
+        .page-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: #ca7912;
+            margin: 15px auto 0;
+        }
+
+    /* Стилове за таблицата */
+    .roles-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+
+        .roles-table th {
+            background-color: #f8f9fa;
+            color: #495057;
+            font-weight: 600;
+            padding: 15px;
+            text-align: left;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .roles-table td {
+            padding: 15px;
+            vertical-align: middle;
+            background-color: #fff;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .roles-table tr:hover td {
+            background-color: #f8f9fa;
+        }
+
+    /* Стилове за чекбокс */
+    .custom-checkbox {
+        display: inline-block;
+        position: relative;
+        padding-left: 30px;
+        cursor: pointer;
+        font-size: 16px;
+        user-select: none;
+    }
+
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background-color: #eee;
+        border-radius: 3px;
+    }
+
+    .custom-checkbox:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    .custom-checkbox input:checked ~ .checkmark {
+        background-color: #ca7912;
+    }
+
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    .custom-checkbox input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    .custom-checkbox .checkmark:after {
+        left: 7px;
+        top: 3px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+
+    /* Стилове за бутона */
+    .btn-container {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .btn-primary {
+        padding: 12px 25px;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 1rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+        background-color: #ca7912;
+        color: white;
+        min-width: 150px;
+    }
+
+        .btn-primary:hover {
+            background-color: #b06a10;
+        }
+
+    /* Стил за връщане назад */
+    .back-link {
+        display: block;
+        margin-top: 30px;
+        color: #6c757d;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+
+        .back-link:hover {
+            color: #ca7912;
+        }
+</style>
+
+<div class="roles-manage-container">
+    <h1 class="page-title">Manage Roles</h1>
+
+    <form asp-action="UpdateRoles" method="post">
+        <input type="hidden" name="userId" value="@ViewBag.UserId" />
+        <table class="roles-table">
+            <thead>
                 <tr>
-                    <td>@role.RoleName</td>
-                    <td>
-                        <input type="checkbox" name="roles" value="@role.RoleName" @(role.IsSelected ? "checked" : "") />
-                    </td>
+                    <th>Role Name</th>
+                    <th>Is Selected</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    <button type="submit" class="btn btn-primary">Update Roles</button>
-</form>
+            </thead>
+            <tbody>
+                @foreach (var role in Model)
+                {
+                    <tr>
+                        <td>@role.RoleName</td>
+                        <td>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="roles" value="@role.RoleName" @(role.IsSelected ? "checked" : "") />
+                                <span class="checkmark"></span>
+                            </label>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="btn-container">
+            <button type="submit" class="btn-primary">Update Roles</button>
+        </div>
+    </form>
+
+    <a asp-action="Index" class="back-link">← Back to Users List</a>
+</div>
