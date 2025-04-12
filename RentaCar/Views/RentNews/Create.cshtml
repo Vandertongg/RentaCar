@@ -4,54 +4,249 @@
     ViewData["Title"] = "Create News";
 }
 
-<h1>Create News</h1>
+<style>
+    /* Основни стилове за страницата */
+    .news-create-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
 
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    .page-title {
+        font-size: 2.2rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+        position: relative;
+    }
 
-            <!-- Поле за заглавие -->
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+        .page-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: #ca7912;
+            margin: 15px auto 0;
+        }
+
+    /* Стилове за формата */
+    .news-form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .news-form-col {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .news-content-section, .news-image-container {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 25px;
+        height: 100%;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 8px;
+        color: #495057;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #ca7912;
+            box-shadow: 0 0 0 0.2rem rgba(202, 121, 18, 0.25);
+            outline: none;
+        }
+
+    textarea.form-control {
+        min-height: 300px;
+        resize: vertical;
+    }
+
+    /* Стилове за превю на изображението */
+    #imagePreview {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+        #imagePreview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+    /* Стилове за бутоните */
+    .btn-container {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+        justify-content: center;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 12px 25px;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 1rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+        min-width: 150px;
+    }
+
+    .btn-primary {
+        background-color: #ca7912;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #b06a10;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    /* Стил за връщане назад */
+    .back-link {
+        display: block;
+        margin-top: 30px;
+        color: #6c757d;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+
+        .back-link:hover {
+            color: #ca7912;
+        }
+
+    /* Стилове за валидационни съобщения */
+    .text-danger {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 5px;
+        display: block;
+    }
+    }
+</style>
+
+<div class="news-create-container">
+    <h1 class="page-title">Create News Article</h1>
+
+    <form asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="news-form-row">
+            <div class="news-form-col">
+                <div class="news-content-section">
+                    <div class="section-title">Article Content</div>
+
+                    <div class="form-group">
+                        <label asp-for="Title" class="form-label">Article Title</label>
+                        <input asp-for="Title" class="form-control" placeholder="Enter a catchy title for your news article" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Content" class="form-label">Content</label>
+                        <textarea asp-for="Content" class="form-control" placeholder="Write your news article content here..."></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
 
-            <!-- Поле за съдържание -->
-            <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <textarea asp-for="Content" class="form-control"></textarea>
-                <span asp-validation-for="Content" class="text-danger"></span>
-            </div>
+            <div class="news-form-col">
+                <div class="news-image-container">
+                    <div class="section-title">Publication Details</div>
 
-            <!-- Поле за дата -->
-            <div class="form-group">
-                <label asp-for="DatePosted" class="control-label"></label>
-                <input asp-for="DatePosted" type="date" class="form-control" />
-                <span asp-validation-for="DatePosted" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="DatePosted" class="form-label">Publication Date</label>
+                        <input asp-for="DatePosted" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="DatePosted" class="text-danger"></span>
+                    </div>
 
-            <!-- Поле за качване на снимка -->
-            <div class="form-group">
-                <label for="NewsPicture">Upload Picture</label>
-                <input type="file" name="NewsPicture" class="form-control" />
+                    <div class="form-group">
+                        <label for="NewsPicture" class="form-label">Featured Image</label>
+                        <input type="file" name="NewsPicture" id="NewsPicture" class="form-control" accept="image/*" />
+                        <div id="imagePreview"></div>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <!-- Бутон за създаване -->
-            <div class="form-group">
-                <input type="submit" value="Create News" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+        <div class="btn-container">
+            <button type="submit" class="btn-primary">Publish News</button>
+            <a asp-action="Index" class="btn-secondary">Cancel</a>
+        </div>
+    </form>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="back-link">← Back to News List</a>
 </div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        // Скрипт за предварителен преглед на изображението
+        document.getElementById('NewsPicture').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const previewContainer = document.getElementById('imagePreview');
+                    previewContainer.innerHTML = '';
+
+                    const img = document.createElement('img');
+                    img.src = event.target.result;
+                    img.alt = 'Preview';
+
+                    previewContainer.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 }
