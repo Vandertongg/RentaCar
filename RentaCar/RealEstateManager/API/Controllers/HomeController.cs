@@ -84,6 +84,20 @@ namespace RentaCar.RealEstateManager.API.Controllers
 
             return Redirect(returnUrl);
         }
+        public IActionResult SergeyKapaka()
+        {
+            return View();
+        }
+
+        public IActionResult DeyanGaykata()
+        {
+            return View();
+        }
+
+        public IActionResult MohammedHrachkomar()
+        {
+            return View();
+        }
 
     }
 }
