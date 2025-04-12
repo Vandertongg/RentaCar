@@ -1,0 +1,192 @@
+﻿@{
+    ViewData["Title"] = "Sergey Kapaka - Mechanic";
+}
+
+@section Styles {
+    <style>
+        .mechanic-profile {
+            max-width: 1000px;
+            margin-bottom: 3rem;
+        }
+
+        .profile-image-container {
+            position: relative;
+            border-radius: 5px;
+            overflow: hidden;
+            max-width: 220px;
+            margin: 0 auto;
+        }
+
+        .experience-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(13, 110, 253, 0.85);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .section-title {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .specialization-item {
+            background-color: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+            .specialization-item:hover {
+                background-color: #e9ecef;
+                transform: translateY(-3px);
+            }
+
+        .career-highlights {
+            padding-left: 1.5rem;
+        }
+
+            .career-highlights li {
+                margin-bottom: 0.5rem;
+                position: relative;
+            }
+
+                .career-highlights li::before {
+                    content: "✓";
+                    color: #0d6efd;
+                    position: absolute;
+                    left: -1.5rem;
+                    font-weight: bold;
+                }
+
+        .social-media-links {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            max-width: 220px;
+            margin: 0 auto;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            color: #495057;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+            .social-icon:hover {
+                background-color: #0d6efd;
+                color: white;
+                transform: translateY(-3px);
+            }
+
+    
+</style>
+}
+
+<div class="mechanic-profile container mt-5">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 mb-4">
+            <div class="profile-image-container">
+                <img src="~/images/Mechanics/Sergey Kapaka.jpg" alt="Sergey Kapaka" class="img-fluid rounded shadow" style="max-width: 250px; height: auto;" />
+
+                <div class="experience-badge">10+ Years</div>
+            </div>
+
+            <div class="social-media-links mt-4 text-center">
+                <h5 class="mb-3">Connect with Sergey</h5>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9 col-md-8">
+            <h1 class="display-5 mb-3">Sergey Kapaka</h1>
+            <h3 class="text-muted mb-4">Master Automotive Technician</h3>
+
+            <div class="about-section mb-4">
+                <h3 class="section-title">About Sergey</h3>
+                <p class="lead">Sergey Kapaka is a skilled mechanic with over 10 years of experience in automotive repair. His dedication to precision and customer satisfaction has made him one of our most trusted team members.</p>
+                <p>With extensive training and hands-on experience, Sergey approaches each vehicle with meticulous attention to detail. He believes in transparent communication with clients and takes pride in explaining complex technical issues in an understandable way.</p>
+            </div>
+
+            <div class="specializations-section mb-4">
+                <h3 class="section-title">Specializations</h3>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="specialization-item">
+                            <i class="fas fa-cogs text-primary me-2"></i>
+                            Engine diagnostics and repair
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="specialization-item">
+                            <i class="fas fa-car text-primary me-2"></i>
+                            Transmission systems
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="specialization-item">
+                            <i class="fas fa-tachometer-alt text-primary me-2"></i>
+                            Brake systems
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="specialization-item">
+                            <i class="fas fa-bolt text-primary me-2"></i>
+                            Electrical troubleshooting
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="career-section">
+                <h3 class="section-title">Career Highlights</h3>
+                <p>Throughout his career, Sergey has worked on a wide range of vehicles, from classic cars to modern hybrids. His expertise has helped countless customers get back on the road safely and efficiently.</p>
+                <ul class="career-highlights">
+                    <li>Lead mechanic on over 500 successful repair projects</li>
+                    <li>Specialized training in European luxury vehicle maintenance</li>
+                    <li>Certified in advanced diagnostic technologies</li>
+                    <li>Recognized for outstanding customer service</li>
+                </ul>
+            </div>
+
+            <div class="contact-section mt-4">
+                <a href="#" class="btn btn-primary">Schedule an Appointment</a>
+                <a href="#" class="btn btn-outline-secondary ms-2">Contact Sergey</a>
+            </div>
+        </div>
+    </div>
+</div>
